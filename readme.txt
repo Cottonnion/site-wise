@@ -76,6 +76,9 @@ Report issues on the WordPress.org support forum or open an issue on GitHub (htt
 
 == Changelog ==
 
+= 1.0.3 =
+* Made report narrative strings translatable (literal plural strings; pot re-extracted).
+
 = 1.0.2 =
 * Renamed to Site Activity Log and rebranded around the site-wise slug.
 * Corrected author profile URL and added the development repository link.

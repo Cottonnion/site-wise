@@ -1,12 +1,12 @@
-# Translation file for Site Activity Log
+# Translation file for WP Site Activity Log
 # Copyright (C) 2026 Yahya Eddaqqaq
-# This file is distributed under the same license as the Site Activity Log package.
+# This file is distributed under the same license as the WP Site Activity Log package.
 
 msgid ""
 msgstr ""
-"Project-Id-Version: Site Activity Log 1.0.0\n"
+"Project-Id-Version: WP Site Activity Log 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/site-wise\n"
-"POT-Creation-Date: 2026-09-20 15:29:55+0000\n"
+"POT-Creation-Date: 2026-09-20 16:09:16+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,13 +19,13 @@ msgstr ""
 msgid "%1$s changed from \"%2$s\" to \"%3$s\""
 msgstr ""
 
-#: app/Admin/ReportAnalyzer.php:198
+#: app/Admin/ReportAnalyzer.php:222
 msgid "%d failed sign-in attempt came from a single IP address."
 msgid_plural "%d failed sign-in attempts came from a single IP address."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/Admin/ReportAnalyzer.php:220
+#: app/Admin/ReportAnalyzer.php:244
 msgid "%d failed sign-in attempt was recorded."
 msgstr ""
 
@@ -33,13 +33,115 @@ msgstr ""
 msgid "%s action performed"
 msgstr ""
 
-#: app/Admin/ReportAnalyzer.php:170
+#: app/Admin/ReportAnalyzer.php:196
+msgid "%s category or tag was changed."
+msgid_plural "%s categories or tags were changed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:189
+msgid "%s comment was added."
+msgid_plural "%s comments were added."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:192
+msgid "%s comment was marked as spam."
+msgid_plural "%s comments were marked as spam."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:154
+msgid "%s media file was deleted."
+msgid_plural "%s media files were deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:151
+msgid "%s media file was uploaded."
+msgid_plural "%s media files were uploaded."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:160
+msgid "%s new user account was created."
+msgid_plural "%s new user accounts were created."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:186
+msgid "%s other theme change was made."
+msgid_plural "%s other theme changes were made."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:157
+msgid "%s person signed in to the site."
+msgid_plural "%s people signed in to the site."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:175
+msgid "%s plugin was deleted."
+msgid_plural "%s plugins were deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:169
+msgid "%s plugin was installed."
+msgid_plural "%s plugins were installed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:179
+msgid "%s plugin was switched on or off."
+msgid_plural "%s plugins were switched on or off."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:172
+msgid "%s plugin was updated."
+msgid_plural "%s plugins were updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:145
+msgid "%s post or page was created or edited."
+msgid_plural "%s posts or pages were created or edited."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:148
+msgid "%s post or page was deleted."
+msgid_plural "%s posts or pages were deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:205
 msgid "%s sign-in attempt failed."
 msgid_plural "%s sign-in attempts failed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/Admin/ReportAnalyzer.php:206
+#: app/Admin/ReportAnalyzer.php:182
+msgid "%s theme change was made."
+msgid_plural "%s theme changes were made."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:166
+msgid "%s user account was deleted."
+msgid_plural "%s user accounts were deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:163
+msgid "%s user had their role changed."
+msgid_plural "%s users had their roles changed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:230
 msgid "%s was granted the Administrator role."
 msgstr ""
 
@@ -269,7 +371,7 @@ msgstr ""
 msgid "Plugin deactivated: %s"
 msgstr ""
 
-#: app/Admin/ReportAnalyzer.php:210
+#: app/Admin/ReportAnalyzer.php:234
 #: app/Log/ActivityLogger.php:87
 msgid "Plugin deleted: %s"
 msgstr ""
@@ -507,7 +609,7 @@ msgstr ""
 msgid "User Role Changed"
 msgstr ""
 
-#: app/Admin/ReportAnalyzer.php:214
+#: app/Admin/ReportAnalyzer.php:238
 msgid "User account deleted: %s"
 msgstr ""
 
@@ -544,7 +646,7 @@ msgstr ""
 msgid "WordPress updated to version %s"
 msgstr ""
 
-#: app/Admin/ReportAnalyzer.php:165
+#: app/Admin/ReportAnalyzer.php:200
 msgid "WordPress was updated to a new version."
 msgstr ""
 

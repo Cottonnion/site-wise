@@ -140,26 +140,61 @@ class ReportAnalyzer
         $narrative = [];
         $c = $counts;
 
-        if (($c['post.created'] + $c['post.updated'] + $c['post.status_changed']) > 0) {
-            $n = $c['post.created'] + $c['post.updated'] + $c['post.status_changed'];
-            $this->say($narrative, $n, '%s post or page was created or edited.', '%s posts or pages were created or edited.');
+        $n = $c['post.created'] + $c['post.updated'] + $c['post.status_changed'];
+        if ($n > 0) {
+            $narrative[] = sprintf(_n('%s post or page was created or edited.', '%s posts or pages were created or edited.', $n, 'site-wise'), number_format_i18n($n));
         }
-        $this->say($narrative, $c['post.deleted'], '%s post or page was deleted.', '%s posts or pages were deleted.');
-        $this->say($narrative, $c['media.uploaded'], '%s media file was uploaded.', '%s media files were uploaded.');
-        $this->say($narrative, $c['media.deleted'], '%s media file was deleted.', '%s media files were deleted.');
-        $this->say($narrative, $c['user.login'], '%s person signed in to the site.', '%s people signed in to the site.');
-        $this->say($narrative, $c['user.registered'], '%s new user account was created.', '%s new user accounts were created.');
-        $this->say($narrative, $c['user.role_changed'], '%s user had their role changed.', '%s users had their roles changed.');
-        $this->say($narrative, $c['user.deleted'], '%s user account was deleted.', '%s user accounts were deleted.');
-        $this->say($narrative, $c['plugin.installed'], '%s plugin was installed.', '%s plugins were installed.');
-        $this->say($narrative, $c['plugin.updated'], '%s plugin was updated.', '%s plugins were updated.');
-        $this->say($narrative, $c['plugin.deleted'], '%s plugin was deleted.', '%s plugins were deleted.');
-        $this->say($narrative, $c['plugin.activated'] + $c['plugin.deactivated'], '%s plugin was switched on or off.', '%s plugins were switched on or off.');
-        $this->say($narrative, $c['theme.switched'], '%s theme change was made.', '%s theme changes were made.');
-        $this->say($narrative, $c['theme.installed'] + $c['theme.updated'] + $c['theme.deleted'], '%s other theme change was made.', '%s other theme changes were made.');
-        $this->say($narrative, $c['comment.created'], '%s comment was added.', '%s comments were added.');
-        $this->say($narrative, $c['comment.spammed'], '%s comment was marked as spam.', '%s comments were marked as spam.');
-        $this->say($narrative, $c['term.created'] + $c['term.deleted'], '%s category or tag was changed.', '%s categories or tags were changed.');
+        if ($c['post.deleted'] > 0) {
+            $narrative[] = sprintf(_n('%s post or page was deleted.', '%s posts or pages were deleted.', $c['post.deleted'], 'site-wise'), number_format_i18n($c['post.deleted']));
+        }
+        if ($c['media.uploaded'] > 0) {
+            $narrative[] = sprintf(_n('%s media file was uploaded.', '%s media files were uploaded.', $c['media.uploaded'], 'site-wise'), number_format_i18n($c['media.uploaded']));
+        }
+        if ($c['media.deleted'] > 0) {
+            $narrative[] = sprintf(_n('%s media file was deleted.', '%s media files were deleted.', $c['media.deleted'], 'site-wise'), number_format_i18n($c['media.deleted']));
+        }
+        if ($c['user.login'] > 0) {
+            $narrative[] = sprintf(_n('%s person signed in to the site.', '%s people signed in to the site.', $c['user.login'], 'site-wise'), number_format_i18n($c['user.login']));
+        }
+        if ($c['user.registered'] > 0) {
+            $narrative[] = sprintf(_n('%s new user account was created.', '%s new user accounts were created.', $c['user.registered'], 'site-wise'), number_format_i18n($c['user.registered']));
+        }
+        if ($c['user.role_changed'] > 0) {
+            $narrative[] = sprintf(_n('%s user had their role changed.', '%s users had their roles changed.', $c['user.role_changed'], 'site-wise'), number_format_i18n($c['user.role_changed']));
+        }
+        if ($c['user.deleted'] > 0) {
+            $narrative[] = sprintf(_n('%s user account was deleted.', '%s user accounts were deleted.', $c['user.deleted'], 'site-wise'), number_format_i18n($c['user.deleted']));
+        }
+        if ($c['plugin.installed'] > 0) {
+            $narrative[] = sprintf(_n('%s plugin was installed.', '%s plugins were installed.', $c['plugin.installed'], 'site-wise'), number_format_i18n($c['plugin.installed']));
+        }
+        if ($c['plugin.updated'] > 0) {
+            $narrative[] = sprintf(_n('%s plugin was updated.', '%s plugins were updated.', $c['plugin.updated'], 'site-wise'), number_format_i18n($c['plugin.updated']));
+        }
+        if ($c['plugin.deleted'] > 0) {
+            $narrative[] = sprintf(_n('%s plugin was deleted.', '%s plugins were deleted.', $c['plugin.deleted'], 'site-wise'), number_format_i18n($c['plugin.deleted']));
+        }
+        $n = $c['plugin.activated'] + $c['plugin.deactivated'];
+        if ($n > 0) {
+            $narrative[] = sprintf(_n('%s plugin was switched on or off.', '%s plugins were switched on or off.', $n, 'site-wise'), number_format_i18n($n));
+        }
+        if ($c['theme.switched'] > 0) {
+            $narrative[] = sprintf(_n('%s theme change was made.', '%s theme changes were made.', $c['theme.switched'], 'site-wise'), number_format_i18n($c['theme.switched']));
+        }
+        $n = $c['theme.installed'] + $c['theme.updated'] + $c['theme.deleted'];
+        if ($n > 0) {
+            $narrative[] = sprintf(_n('%s other theme change was made.', '%s other theme changes were made.', $n, 'site-wise'), number_format_i18n($n));
+        }
+        if ($c['comment.created'] > 0) {
+            $narrative[] = sprintf(_n('%s comment was added.', '%s comments were added.', $c['comment.created'], 'site-wise'), number_format_i18n($c['comment.created']));
+        }
+        if ($c['comment.spammed'] > 0) {
+            $narrative[] = sprintf(_n('%s comment was marked as spam.', '%s comments were marked as spam.', $c['comment.spammed'], 'site-wise'), number_format_i18n($c['comment.spammed']));
+        }
+        $n = $c['term.created'] + $c['term.deleted'];
+        if ($n > 0) {
+            $narrative[] = sprintf(_n('%s category or tag was changed.', '%s categories or tags were changed.', $n, 'site-wise'), number_format_i18n($n));
+        }
 
         if ($c['core.updated'] > 0) {
             $narrative[] = __('WordPress was updated to a new version.', 'site-wise');
@@ -173,17 +208,6 @@ class ReportAnalyzer
         }
 
         return $narrative;
-    }
-
-    private function say(array &$narrative, int $count, string $singular, string $plural): void
-    {
-        if ($count <= 0) {
-            return;
-        }
-        $narrative[] = sprintf(
-            _n($singular, $plural, $count, 'site-wise'),
-            number_format_i18n($count)
-        );
     }
 
     private function build_attention(array $failed_by_ip, array $admin_grants, array $deleted_plugins, array $deleted_users, array $counts): array
