@@ -3,7 +3,12 @@
   "type": "wordpress-plugin",
   "description": "Beautiful activity log and site reports for freelancers and agencies",
   "version": "1.0.0",
-  "author": "Yahya Eddaqqaq",
+  "authors": [
+    {
+      "name": "Yahya Eddaqqaq",
+      "homepage": "https://github.com/Cottonnion/wp-site-activity-log"
+    }
+  ],
   "license": "GPL-2.0-or-later",
   "require": {
     "php": ">=8.1"

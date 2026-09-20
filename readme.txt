@@ -1,5 +1,5 @@
 === WP Site Activity Log ===
-Contributors: yahyaeeddaqqaq, yahyadeved
+Contributors: yahyadeved
 Tags: activity log, audit log, user activity, site report, logging
 Requires at least: 6.0
 Tested up to: 7.1.1
@@ -68,7 +68,7 @@ Yes. On the Activity Log screen, use the "Export CSV" button to download the fil
 
 = Where can I get support? =
 
-Report issues on the plugin's WordPress.org support forum or the development repository.
+Report issues on the WordPress.org support forum or open an issue on GitHub (https://github.com/Cottonnion/wp-site-activity-log/issues).
 
 == Screenshots ==
 

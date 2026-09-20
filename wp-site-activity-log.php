@@ -5,10 +5,11 @@
  * @package WP_Site_Activity_Log
  *
  * Plugin Name: WP Site Activity Log
+ * Plugin URI: https://github.com/Cottonnion/wp-site-activity-log
  * Description: A clean activity log and shareable site reports for freelancers and agencies.
  * Version: 1.0.0
  * Author: Yahya Eddaqqaq
- * Author URI: https://profiles.wordpress.org/yahyaeeddaqqaq/
+ * Author URI: https://profiles.wordpress.org/yahyadeved/
  * Requires at least: 6.0
  * Requires PHP: 8.1
  * Tested up to: 7.1.1
