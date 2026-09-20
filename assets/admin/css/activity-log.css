@@ -1,0 +1,42 @@
+/* Filter bar */
+.wsal-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--wsal-space-md);
+  margin-bottom: var(--wsal-space-md);
+}
+
+.wsal-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wsal-space-xs);
+}
+
+.wsal-filter-group label {
+  font-size: var(--wsal-font-sm);
+  font-weight: 500;
+  color: var(--wsal-color-text-muted);
+}
+
+.wsal-filter-group .wsal-input,
+.wsal-filter-group .wsal-select {
+  width: 240px;
+}
+
+.wsal-log-actions {
+  margin-left: auto;
+  display: flex;
+  gap: var(--wsal-space-sm);
+}
+
+/* Pagination */
+.wsal-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--wsal-space-sm);
+  padding-top: var(--wsal-space-md);
+  font-size: var(--wsal-font-md);
+  color: var(--wsal-color-text-muted);
+}

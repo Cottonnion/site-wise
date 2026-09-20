@@ -1,0 +1,204 @@
+:root {
+  --wsal-color-primary: #4f46e5;
+  --wsal-color-primary-hover: #4338ca;
+  --wsal-color-danger: #dc2626;
+  --wsal-color-success: #16a34a;
+  --wsal-color-warning: #d97706;
+  --wsal-color-info: #2563eb;
+  --wsal-color-text: #1d2327;
+  --wsal-color-text-muted: #646970;
+  --wsal-color-border: #dcdcde;
+  --wsal-color-border-soft: #f0f0f1;
+  --wsal-color-bg: #f6f7f7;
+  --wsal-color-surface: #ffffff;
+  --wsal-font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --wsal-font-sm: 12px;
+  --wsal-font-md: 13px;
+  --wsal-font-lg: 14px;
+  --wsal-radius-full: 9999px;
+  --wsal-radius-md: 6px;
+}
+
+.wsal-report-period {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: var(--wsal-radius-full);
+  background-color: var(--wsal-color-primary);
+  color: #fff;
+  font-size: var(--wsal-font-md);
+  font-weight: 500;
+}
+
+.wsal-report-narrative {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.wsal-report-narrative li {
+  padding: 12px 16px;
+  border: 1px solid var(--wsal-color-border-soft);
+  border-left-width: 3px;
+  border-radius: var(--wsal-radius-md);
+  background-color: var(--wsal-color-surface);
+  color: var(--wsal-color-text);
+}
+
+.wsal-attention-warning { border-left-color: var(--wsal-color-warning); background-color: #fffbeb; }
+.wsal-attention-critical { border-left-color: var(--wsal-color-danger); background-color: #fef2f2; }
+.wsal-attention-info { border-left-color: var(--wsal-color-info); background-color: #eff6ff; }
+
+.wsal-report-quiet {
+  color: var(--wsal-color-text-muted);
+  font-size: var(--wsal-font-lg);
+}
+
+.wsal-report-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: var(--wsal-font-base);
+}
+
+.wsal-report-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid var(--wsal-color-border);
+}
+
+.wsal-report-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--wsal-color-primary);
+  margin-bottom: 8px;
+}
+
+.wsal-report-url {
+  color: var(--wsal-color-text-muted);
+  font-size: var(--wsal-font-lg);
+}
+
+.wsal-report-meta {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--wsal-color-bg);
+  padding: 20px;
+  border-radius: var(--wsal-radius-lg);
+  margin-bottom: 40px;
+}
+
+.wsal-report-meta-item {
+  text-align: center;
+}
+
+.wsal-report-meta-label {
+  display: block;
+  font-size: var(--wsal-font-sm);
+  color: var(--wsal-color-text-muted);
+  margin-bottom: 4px;
+}
+
+.wsal-report-meta-value {
+  font-size: var(--wsal-font-lg);
+  font-weight: 600;
+  color: var(--wsal-color-text);
+}
+
+.wsal-report-section {
+  margin-bottom: 40px;
+}
+
+.wsal-report-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--wsal-color-border);
+}
+
+.wsal-report-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wsal-breakdown-item {
+  display: grid;
+  grid-template-columns: 100px 1fr 60px;
+  align-items: center;
+  gap: 15px;
+}
+
+.wsal-breakdown-label {
+  font-weight: 500;
+  text-transform: capitalize;
+  color: var(--wsal-color-text);
+}
+
+.wsal-breakdown-bar {
+  height: 8px;
+  background-color: var(--wsal-color-bg);
+  border-radius: var(--wsal-radius-full);
+  overflow: hidden;
+}
+
+.wsal-breakdown-fill {
+  height: 100%;
+  background-color: var(--wsal-color-primary);
+  border-radius: var(--wsal-radius-full);
+  transition: width 0.3s ease;
+}
+
+.wsal-breakdown-count {
+  font-weight: 600;
+  color: var(--wsal-color-text);
+  text-align: right;
+}
+
+.wsal-report-users {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wsal-user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: var(--wsal-color-bg);
+  border-radius: var(--wsal-radius-md);
+}
+
+.wsal-user-name {
+  font-weight: 500;
+  color: var(--wsal-color-text);
+}
+
+.wsal-user-count {
+  font-size: var(--wsal-font-sm);
+  color: var(--wsal-color-text-muted);
+}
+
+.wsal-report-footer {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid var(--wsal-color-border);
+  color: var(--wsal-color-text-muted);
+  font-size: var(--wsal-font-sm);
+}
+
+@media (max-width: 600px) {
+  .wsal-report-meta {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .wsal-breakdown-item {
+    grid-template-columns: 80px 1fr 50px;
+  }
+}

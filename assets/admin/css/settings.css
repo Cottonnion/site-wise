@@ -1,0 +1,24 @@
+/* Settings page */
+.wsal-settings-form label.wsal-label {
+  font-weight: 500;
+}
+
+.wsal-settings-form .wsal-form-group small {
+  margin-top: 4px;
+}
+
+.wsal-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: var(--wsal-space-sm);
+}
+
+.wsal-checkbox-row input {
+  margin: 0;
+}
+
+.wsal-settings-actions {
+  margin-top: var(--wsal-space-md);
+  padding-top: var(--wsal-space-md);
+  border-top: 1px solid var(--wsal-color-border-soft);
+}

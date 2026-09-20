@@ -1,0 +1,81 @@
+/* App shell */
+.wsal-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: var(--wsal-space-lg);
+  border-bottom: 1px solid var(--wsal-color-border);
+}
+
+.wsal-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 14px;
+  margin-bottom: -1px;
+  color: var(--wsal-color-text-muted);
+  text-decoration: none;
+  font-size: var(--wsal-font-md);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
+}
+
+.wsal-tab:hover {
+  color: var(--wsal-color-text);
+}
+
+.wsal-tab.is-active {
+  color: var(--wsal-color-text);
+  border-bottom-color: var(--wsal-color-primary);
+}
+
+.wsal-view {
+  position: relative;
+  min-height: 120px;
+}
+
+.wsal-view.wsal-loading {
+  opacity: .55;
+  pointer-events: none;
+}
+
+.wsal-view.wsal-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--wsal-color-border);
+  border-top-color: var(--wsal-color-primary);
+  border-radius: 50%;
+  animation: wsal-spin .6s linear infinite;
+}
+
+@keyframes wsal-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Stats grid */
+.wsal-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--wsal-space-md);
+}
+
+/* Report bar */
+.wsal-report-bar {
+  padding: 12px 18px;
+}
+
+.wsal-report-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--wsal-space-sm);
+  font-size: var(--wsal-font-md);
+  color: var(--wsal-color-text-muted);
+}
+
+.wsal-report-period {
+  font-weight: 500;
+}

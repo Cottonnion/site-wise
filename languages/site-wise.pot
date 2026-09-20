@@ -1,0 +1,554 @@
+# Translation file for WP Site Activity Log
+# Copyright (C) 2026 Yahya Eddaqqaq
+# This file is distributed under the same license as the WP Site Activity Log package.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Site Activity Log 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/site-wise\n"
+"POT-Creation-Date: 2026-09-20 15:29:55+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: site-wise\n"
+
+#: templates/frontend/partials/report-public.php:82
+#: templates/admin/partials/report-preview.php:59
+msgid "%1$s changed from \"%2$s\" to \"%3$s\""
+msgstr ""
+
+#: app/Admin/ReportAnalyzer.php:198
+msgid "%d failed sign-in attempt came from a single IP address."
+msgid_plural "%d failed sign-in attempts came from a single IP address."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:220
+msgid "%d failed sign-in attempt was recorded."
+msgstr ""
+
+#: app/Log/ActivityLogger.php:103
+msgid "%s action performed"
+msgstr ""
+
+#: app/Admin/ReportAnalyzer.php:170
+msgid "%s sign-in attempt failed."
+msgid_plural "%s sign-in attempts failed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Admin/ReportAnalyzer.php:206
+msgid "%s was granted the Administrator role."
+msgstr ""
+
+#: app/Trackers/UserTracker.php:120
+msgid "(none)"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:37
+msgid "Active Users"
+msgstr ""
+
+#: app/Core/MenuManager.php:44
+#: app/Admin/AdminController.php:53
+#: templates/admin/pages/activity-log.php:33
+#: templates/admin/partials/header.php:3
+msgid "Activity Log"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:95
+msgid "Activity by Area"
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:47
+msgid "All events"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:107
+msgid "Categories &amp; Tags"
+msgstr ""
+
+#: app/Log/EventRegistry.php:60
+msgid "Comment Created"
+msgstr ""
+
+#: app/Log/EventRegistry.php:62
+msgid "Comment Deleted"
+msgstr ""
+
+#: app/Log/EventRegistry.php:61
+msgid "Comment Marked Spam"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:97
+msgid "Comment deleted: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:95
+msgid "Comment from %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:96
+msgid "Comment marked as spam: %s"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:106
+msgid "Comments"
+msgstr ""
+
+#: templates/admin/partials/report-preview.php:23
+msgid "Copy Report Link"
+msgstr ""
+
+#: templates/admin/partials/header.php:10
+msgid "Dashboard"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:94
+msgid "Deleted media: %s"
+msgstr ""
+
+#: templates/admin/pages/settings.php:31
+msgid "Enable Shareable Reports"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:33
+msgid "Events This Week"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:29
+msgid "Events Today"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:29
+#: templates/admin/pages/activity-log.php:5
+msgid "Event"
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:62
+msgid "Export CSV"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:41
+msgid "Failed Logins (7d)"
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:57
+msgid "Filter"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:39
+msgid "Generated:"
+msgstr ""
+
+#: app/Trackers/CommentTracker.php:44
+msgid "Guest"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:61
+#: templates/admin/pages/activity-log.php:78
+msgid "IP"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:76
+#: templates/admin/partials/report-preview.php:53
+msgid "Important settings changed"
+msgstr ""
+
+#: app/Admin/ReportGenerator.php:115
+msgid "Invalid or expired token"
+msgstr ""
+
+#: app/Admin/AdminController.php:49
+msgid "Invalid page"
+msgstr ""
+
+#: app/Admin/ReportGenerator.php:145
+#: templates/admin/pages/settings.php:43
+msgid "Last 30 days"
+msgstr ""
+
+#: app/Admin/ReportGenerator.php:144
+#: templates/admin/pages/settings.php:42
+msgid "Last 7 days"
+msgstr ""
+
+#: templates/admin/pages/settings.php:19
+msgid "Log Retention (Days)"
+msgstr ""
+
+#: app/Log/EventRegistry.php:39
+msgid "Login Failed"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:78
+msgid "Login failed for: %s"
+msgstr ""
+
+#: templates/admin/pages/settings.php:23
+msgid "Logs older than this will be automatically deleted"
+msgstr ""
+
+#: app/Log/EventRegistry.php:58
+msgid "Media Deleted"
+msgstr ""
+
+#: app/Log/EventRegistry.php:57
+msgid "Media Uploaded"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:105
+msgid "Media"
+msgstr ""
+
+#: templates/admin/partials/report-preview.php:40
+msgid "Needs your attention"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:72
+msgid "New post created: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:79
+msgid "New user registered: %s"
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:101
+msgid "Next"
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:69
+msgid "No activity found"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:52
+msgid "No activity yet"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:51
+#: templates/admin/partials/report-preview.php:29
+msgid "No notable activity during this period."
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:59
+#: templates/admin/pages/activity-log.php:76
+msgid "Object"
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:97
+msgid "Page %d of %d"
+msgstr ""
+
+#: app/Log/EventRegistry.php:45
+msgid "Plugin Activated"
+msgstr ""
+
+#: app/Log/EventRegistry.php:46
+msgid "Plugin Deactivated"
+msgstr ""
+
+#: app/Log/EventRegistry.php:49
+msgid "Plugin Deleted"
+msgstr ""
+
+#: app/Log/EventRegistry.php:48
+msgid "Plugin Installed"
+msgstr ""
+
+#: app/Log/EventRegistry.php:47
+msgid "Plugin Updated"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:83
+msgid "Plugin activated: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:84
+msgid "Plugin deactivated: %s"
+msgstr ""
+
+#: app/Admin/ReportAnalyzer.php:210
+#: app/Log/ActivityLogger.php:87
+msgid "Plugin deleted: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:86
+msgid "Plugin installed: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:85
+msgid "Plugin updated: %s"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:102
+msgid "Plugins"
+msgstr ""
+
+#: app/Log/EventRegistry.php:32
+msgid "Post Created"
+msgstr ""
+
+#: app/Log/EventRegistry.php:34
+msgid "Post Deleted"
+msgstr ""
+
+#: app/Log/EventRegistry.php:35
+msgid "Post Status Changed"
+msgstr ""
+
+#: app/Log/EventRegistry.php:33
+msgid "Post Updated"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:74
+msgid "Post deleted: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:75
+msgid "Post status changed: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:73
+msgid "Post updated: %s"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:100
+msgid "Posts &amp; Pages"
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:93
+msgid "Previous"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:82
+msgid "Profile updated: %s"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:47
+msgid "Recent Activity"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:35
+msgid "Report Period:"
+msgstr ""
+
+#: templates/admin/pages/settings.php:38
+msgid "Report Period"
+msgstr ""
+
+#: app/Core/AssetsManager.php:100
+msgid "Report link copied to clipboard!"
+msgstr ""
+
+#: app/Admin/ReportGenerator.php:129
+msgid "Report template not found"
+msgstr ""
+
+#: app/Admin/ReportGenerator.php:146
+msgid "Reporting period"
+msgstr ""
+
+#: app/Admin/ReportGenerator.php:110
+msgid "Reports are disabled on this site"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:81
+msgid "Role changed for user: %s"
+msgstr ""
+
+#: templates/admin/pages/settings.php:50
+msgid "Save Settings"
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:40
+msgid "Search..."
+msgstr ""
+
+#: templates/admin/pages/activity-log.php:38
+msgid "Search"
+msgstr ""
+
+#: app/Log/EventRegistry.php:67
+msgid "Settings Updated"
+msgstr ""
+
+#: app/Admin/AdminController.php:100
+msgid "Settings saved successfully"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:100
+msgid "Settings updated"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:108
+#: templates/admin/pages/settings.php:11
+#: templates/admin/partials/header.php:16
+msgid "Settings"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:22
+#: templates/admin/partials/report-preview.php:20
+msgid "Site Report"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:49
+msgid "Summary"
+msgstr ""
+
+#: app/Log/EventRegistry.php:64
+msgid "Taxonomy Term Created"
+msgstr ""
+
+#: app/Log/EventRegistry.php:65
+msgid "Taxonomy Term Deleted"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:98
+msgid "Taxonomy term created: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:99
+msgid "Taxonomy term deleted: %s"
+msgstr ""
+
+#: app/Log/EventRegistry.php:54
+msgid "Theme Deleted"
+msgstr ""
+
+#: app/Log/EventRegistry.php:52
+msgid "Theme Installed"
+msgstr ""
+
+#: app/Log/EventRegistry.php:51
+msgid "Theme Switched"
+msgstr ""
+
+#: app/Log/EventRegistry.php:53
+msgid "Theme Updated"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:91
+msgid "Theme deleted: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:89
+msgid "Theme installed: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:88
+msgid "Theme switched to: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:90
+msgid "Theme updated: %s"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:103
+msgid "Themes"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:63
+msgid "Things to be aware of"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:124
+msgid "This is an automated report generated by WP Site Activity Log. IP addresses and user details are not shown in this client report."
+msgstr ""
+
+#: templates/admin/pages/settings.php:45
+msgid "Time range covered by the shareable report"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:62
+#: templates/admin/pages/activity-log.php:79
+msgid "Time"
+msgstr ""
+
+#: app/Admin/ReportGenerator.php:143
+#: templates/admin/pages/settings.php:41
+msgid "Today"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:43
+msgid "Total Events:"
+msgstr ""
+
+#: app/Admin/AdminController.php:65
+msgid "Unauthorized"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:93
+msgid "Uploaded: %s"
+msgstr ""
+
+#: app/Log/EventRegistry.php:41
+msgid "User Deleted"
+msgstr ""
+
+#: app/Log/EventRegistry.php:37
+msgid "User Login"
+msgstr ""
+
+#: app/Log/EventRegistry.php:38
+msgid "User Logout"
+msgstr ""
+
+#: app/Log/EventRegistry.php:43
+msgid "User Profile Updated"
+msgstr ""
+
+#: app/Log/EventRegistry.php:40
+msgid "User Registered"
+msgstr ""
+
+#: app/Log/EventRegistry.php:42
+msgid "User Role Changed"
+msgstr ""
+
+#: app/Admin/ReportAnalyzer.php:214
+msgid "User account deleted: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:80
+msgid "User deleted: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:76
+msgid "User logged in: %s"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:77
+msgid "User logged out: %s"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:101
+msgid "Users"
+msgstr ""
+
+#: templates/admin/pages/dashboard.php:37
+#: templates/admin/pages/activity-log.php:77
+msgid "User"
+msgstr ""
+
+#: app/Log/EventRegistry.php:55
+msgid "WordPress Core Updated"
+msgstr ""
+
+#: templates/frontend/partials/report-public.php:104
+msgid "WordPress Core"
+msgstr ""
+
+#: app/Log/ActivityLogger.php:92
+msgid "WordPress updated to version %s"
+msgstr ""
+
+#: app/Admin/ReportAnalyzer.php:165
+msgid "WordPress was updated to a new version."
+msgstr ""
+
+#: templates/admin/partials/log-row.php:12
+msgid "ago"
+msgstr ""
+

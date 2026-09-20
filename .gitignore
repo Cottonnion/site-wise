@@ -1,0 +1,13 @@
+# WordPress.org release build ignores
+vendor/
+dist/
+*.zip
+*.tar.gz
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Maintain .github/workflows committed on purpose (not ignored)
+!.github/
