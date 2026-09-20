@@ -1,11 +1,11 @@
 <?php
 /**
- * WP Site Activity Log
+ * Site Activity Log
  *
- * @package WP_Site_Activity_Log
+ * @package Site_Activity_Log
  *
- * Plugin Name: WP Site Activity Log
- * Plugin URI: https://github.com/Cottonnion/wp-site-activity-log
+ * Plugin Name: Site Activity Log
+ * Plugin URI: https://github.com/Cottonnion/site-wise
  * Description: A clean activity log and shareable site reports for freelancers and agencies.
  * Version: 1.0.0
  * Author: Yahya Eddaqqaq

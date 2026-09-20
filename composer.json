@@ -1,12 +1,12 @@
 {
-  "name": "yahya/wp-site-activity-log",
+  "name": "yahya/site-wise",
   "type": "wordpress-plugin",
   "description": "Beautiful activity log and site reports for freelancers and agencies",
   "version": "1.0.0",
   "authors": [
     {
       "name": "Yahya Eddaqqaq",
-      "homepage": "https://github.com/Cottonnion/wp-site-activity-log"
+      "homepage": "https://github.com/Cottonnion/site-wise"
     }
   ],
   "license": "GPL-2.0-or-later",

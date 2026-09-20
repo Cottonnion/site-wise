@@ -1,4 +1,4 @@
-# WP Site Activity Log
+# Site Activity Log
 
 A clean activity log and shareable site reports for freelancers and agencies.
 

@@ -1,4 +1,4 @@
-=== WP Site Activity Log ===
+=== Site Activity Log ===
 Contributors: yahyadeved
 Tags: activity log, audit log, user activity, site report, logging
 Requires at least: 6.0
@@ -14,7 +14,7 @@ A clean activity log and shareable site reports for freelancers and agencies.
 
 == Description ==
 
-WP Site Activity Log records notable events on your WordPress site in a fast, searchable history and turns them into shareable reports — built for freelancers and agencies who need a quick, honest view of what's happening on the sites they manage.
+Site Activity Log records notable events on your WordPress site in a fast, searchable history and turns them into shareable reports — built for freelancers and agencies who need a quick, honest view of what's happening on the sites they manage.
 
 = What it does =
 
@@ -68,13 +68,20 @@ Yes. On the Activity Log screen, use the "Export CSV" button to download the fil
 
 = Where can I get support? =
 
-Report issues on the WordPress.org support forum or open an issue on GitHub (https://github.com/Cottonnion/wp-site-activity-log/issues).
+Report issues on the WordPress.org support forum or open an issue on GitHub (https://github.com/Cottonnion/site-wise/issues).
 
 == Screenshots ==
 
 1. Dashboard view with the weekly report, stats and recent activity.
 
 == Changelog ==
+
+= 1.0.2 =
+* Renamed to Site Activity Log and rebranded around the site-wise slug.
+* Corrected author profile URL and added the development repository link.
+
+= 1.0.1 =
+* Fixed author profile URL in the plugin header.
 
 = 1.0.0 =
 * Initial release.
