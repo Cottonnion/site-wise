@@ -39,7 +39,8 @@
   --wsal-shadow-lg: 0 8px 24px rgba(0,0,0,.08);
 }
 
-* {
+.wsal-wrap,
+.wsal-wrap * {
   box-sizing: border-box;
 }
 

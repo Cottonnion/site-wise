@@ -19,8 +19,8 @@ $by_type = $report['by_type'] ?? [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
-    <title><?php echo esc_html($site_name !== '' ? $site_name : __('Site Report', 'site-wise')); ?></title>
-    <link rel="stylesheet" href="<?php echo esc_url(WSAL_URL . 'assets/frontend/css/report.css'); ?>">
+    <title><?php echo esc_html($site_name !== '' ? $site_name : __('Site Report', 'syncly-site-reports')); ?></title>
+    <?php wp_print_styles('wsal-report-css'); ?>
 </head>
 <body>
     <div class="wsal-report-container">
@@ -32,23 +32,23 @@ $by_type = $report['by_type'] ?? [];
 
         <div class="wsal-report-meta">
             <div class="wsal-report-meta-item">
-                <span class="wsal-report-meta-label"><?php esc_html_e('Report Period:', 'site-wise'); ?></span>
+                <span class="wsal-report-meta-label"><?php esc_html_e('Report Period:', 'syncly-site-reports'); ?></span>
                 <span class="wsal-report-meta-value"><?php echo esc_html($period_label); ?></span>
             </div>
             <div class="wsal-report-meta-item">
-                <span class="wsal-report-meta-label"><?php esc_html_e('Generated:', 'site-wise'); ?></span>
+                <span class="wsal-report-meta-label"><?php esc_html_e('Generated:', 'syncly-site-reports'); ?></span>
                 <span class="wsal-report-meta-value"><?php echo esc_html($report['generated_at'] ?? ''); ?></span>
             </div>
             <div class="wsal-report-meta-item">
-                <span class="wsal-report-meta-label"><?php esc_html_e('Total Events:', 'site-wise'); ?></span>
+                <span class="wsal-report-meta-label"><?php esc_html_e('Total Events:', 'syncly-site-reports'); ?></span>
                 <span class="wsal-report-meta-value"><?php echo esc_html($total_events); ?></span>
             </div>
         </div>
 
         <div class="wsal-report-section">
-            <h2><?php esc_html_e('Summary', 'site-wise'); ?></h2>
+            <h2><?php esc_html_e('Summary', 'syncly-site-reports'); ?></h2>
             <?php if (empty($narrative)) : ?>
-                <p class="wsal-report-quiet"><?php esc_html_e('No notable activity during this period.', 'site-wise'); ?></p>
+                <p class="wsal-report-quiet"><?php esc_html_e('No notable activity during this period.', 'syncly-site-reports'); ?></p>
             <?php else : ?>
                 <ul class="wsal-report-narrative">
                     <?php foreach ($narrative as $sentence) : ?>
@@ -60,7 +60,7 @@ $by_type = $report['by_type'] ?? [];
 
         <?php if (!empty($attention)) : ?>
             <div class="wsal-report-section">
-                <h2><?php esc_html_e('Things to be aware of', 'site-wise'); ?></h2>
+                <h2><?php esc_html_e('Things to be aware of', 'syncly-site-reports'); ?></h2>
                 <ul class="wsal-report-narrative">
                     <?php foreach ($attention as $item) : ?>
                         <li class="wsal-attention-<?php echo esc_attr($item['severity'] ?? 'info'); ?>">
@@ -73,13 +73,13 @@ $by_type = $report['by_type'] ?? [];
 
         <?php if (!empty($drift)) : ?>
             <div class="wsal-report-section">
-                <h2><?php esc_html_e('Important settings changed', 'site-wise'); ?></h2>
+                <h2><?php esc_html_e('Important settings changed', 'syncly-site-reports'); ?></h2>
                 <ul class="wsal-report-narrative">
                     <?php foreach ($drift as $row) : ?>
                         <li>
                             <?php echo esc_html(sprintf(
                                 /* translators: 1: option name, 2: old value, 3: new value */
-                                __('%1$s changed from "%2$s" to "%3$s"', 'site-wise'),
+                                __('%1$s changed from "%2$s" to "%3$s"', 'syncly-site-reports'),
                                 $row['option'],
                                 $row['old'],
                                 $row['new']
@@ -92,20 +92,20 @@ $by_type = $report['by_type'] ?? [];
 
         <?php if (!empty($by_type)) : ?>
             <div class="wsal-report-section">
-                <h2><?php esc_html_e('Activity by Area', 'site-wise'); ?></h2>
+                <h2><?php esc_html_e('Activity by Area', 'syncly-site-reports'); ?></h2>
                 <div class="wsal-report-breakdown">
                     <?php
                     $max = max(array_values($by_type));
                     $labels = [
-                        'post' => __('Posts &amp; Pages', 'site-wise'),
-                        'user' => __('Users', 'site-wise'),
-                        'plugin' => __('Plugins', 'site-wise'),
-                        'theme' => __('Themes', 'site-wise'),
-                        'core' => __('WordPress Core', 'site-wise'),
-                        'media' => __('Media', 'site-wise'),
-                        'comment' => __('Comments', 'site-wise'),
-                        'term' => __('Categories &amp; Tags', 'site-wise'),
-                        'settings' => __('Settings', 'site-wise'),
+                        'post' => __('Posts &amp; Pages', 'syncly-site-reports'),
+                        'user' => __('Users', 'syncly-site-reports'),
+                        'plugin' => __('Plugins', 'syncly-site-reports'),
+                        'theme' => __('Themes', 'syncly-site-reports'),
+                        'core' => __('WordPress Core', 'syncly-site-reports'),
+                        'media' => __('Media', 'syncly-site-reports'),
+                        'comment' => __('Comments', 'syncly-site-reports'),
+                        'term' => __('Categories &amp; Tags', 'syncly-site-reports'),
+                        'settings' => __('Settings', 'syncly-site-reports'),
                     ];
                     foreach ($by_type as $type => $count) : ?>
                         <div class="wsal-breakdown-item">
@@ -121,7 +121,7 @@ $by_type = $report['by_type'] ?? [];
         <?php endif; ?>
 
         <div class="wsal-report-footer">
-            <p><?php echo esc_html__('This is an automated report generated by Site Activity Log. IP addresses and user details are not shown in this client report.', 'site-wise'); ?></p>
+            <p><?php echo esc_html__('This is an automated report generated by Syncly Site Reports & Event History. IP addresses and user details are not shown in this client report.', 'syncly-site-reports'); ?></p>
         </div>
     </div>
 </body>

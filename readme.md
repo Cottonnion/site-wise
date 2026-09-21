@@ -1,4 +1,4 @@
-# Site Activity Log
+# Syncly Site Reports & Event History
 
 A clean activity log and shareable site reports for freelancers and agencies.
 
@@ -22,6 +22,8 @@ Every tracked event is stored in a dedicated database table with the user who pe
 | `user.login_failed` | Failed login attempt | warning |
 | `user.registered` | New user registered | info |
 | `user.deleted` | User deleted | warning |
+| `user.role_changed` | User role changed (e.g. promoted to admin) | warning |
+| `user.profile_updated` | User profile/account updated | info |
 
 ### Plugins
 | Event code | Description | Severity |
@@ -32,16 +34,43 @@ Every tracked event is stored in a dedicated database table with the user who pe
 | `plugin.installed` | Plugin installed | info |
 | `plugin.deleted` | Plugin deleted | warning |
 
-### Settings & Themes
+### Themes & Core
+| Event code | Description | Severity |
+| --- | --- | --- |
+| `theme.switched` | Active theme changed | info |
+| `theme.installed` | Theme installed | info |
+| `theme.updated` | Theme updated | info |
+| `theme.deleted` | Theme deleted | warning |
+| `core.updated` | WordPress core updated | info |
+
+### Media
+| Event code | Description | Severity |
+| --- | --- | --- |
+| `media.uploaded` | Media file uploaded | info |
+| `media.deleted` | Media file deleted | warning |
+
+### Comments
+| Event code | Description | Severity |
+| --- | --- | --- |
+| `comment.created` | Comment added | info |
+| `comment.spammed` | Comment marked as spam | warning |
+| `comment.deleted` | Comment deleted | warning |
+
+### Taxonomies
+| Event code | Description | Severity |
+| --- | --- | --- |
+| `term.created` | Category or tag created | info |
+| `term.deleted` | Category or tag deleted | warning |
+
+### Settings
 | Event code | Description | Severity |
 | --- | --- | --- |
 | `settings.updated` | A WordPress option was updated | info |
-| `theme.switched` | Active theme changed | info |
 
 ## What is stored per event
 
 - **Event code** — machine-readable identifier (e.g. `post.deleted`).
-- **Object type & name** — the type (`post`, `user`, `plugin`, `settings`, `theme`) and the affected object name/ID.
+- **Object type & name** — the type (`post`, `user`, `plugin`, `theme`, `core`, `media`, `comment`, `term`, `settings`) and the affected object name/ID.
 - **User** — username of the actor, or `-` for logged-out events such as failed logins.
 - **IP address** — client IP at the time of the event.
 - **Timestamp** — when the event happened.

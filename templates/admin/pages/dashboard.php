@@ -26,40 +26,40 @@ include WSAL_PATH . 'templates/admin/partials/report-preview.php';
 <div class="wsal-stats-grid wsal-mt-lg">
     <div class="wsal-stat-card">
         <div class="wsal-stat-number"><?php echo esc_html($today_count); ?></div>
-        <div class="wsal-stat-label"><?php esc_html_e('Events Today', 'site-wise'); ?></div>
+        <div class="wsal-stat-label"><?php esc_html_e('Events Today', 'syncly-site-reports'); ?></div>
     </div>
     <div class="wsal-stat-card">
         <div class="wsal-stat-number"><?php echo esc_html($week_count); ?></div>
-        <div class="wsal-stat-label"><?php esc_html_e('Events This Week', 'site-wise'); ?></div>
+        <div class="wsal-stat-label"><?php esc_html_e('Events This Week', 'syncly-site-reports'); ?></div>
     </div>
     <div class="wsal-stat-card">
         <div class="wsal-stat-number"><?php echo esc_html($active_users); ?></div>
-        <div class="wsal-stat-label"><?php esc_html_e('Active Users', 'site-wise'); ?></div>
+        <div class="wsal-stat-label"><?php esc_html_e('Active Users', 'syncly-site-reports'); ?></div>
     </div>
     <div class="wsal-stat-card">
         <div class="wsal-stat-number"><?php echo esc_html($failed_count); ?></div>
-        <div class="wsal-stat-label"><?php esc_html_e('Failed Logins (7d)', 'site-wise'); ?></div>
+        <div class="wsal-stat-label"><?php esc_html_e('Failed Logins (7d)', 'syncly-site-reports'); ?></div>
     </div>
 </div>
 
 <div class="wsal-card wsal-mt-lg">
     <div class="wsal-card-header">
-        <h2 class="wsal-card-title"><?php esc_html_e('Recent Activity', 'site-wise'); ?></h2>
+        <h2 class="wsal-card-title"><?php esc_html_e('Recent Activity', 'syncly-site-reports'); ?></h2>
     </div>
     <div class="wsal-card-body">
         <?php if (empty($logs)) : ?>
             <div class="wsal-empty-state">
-                <p><?php esc_html_e('No activity yet', 'site-wise'); ?></p>
+                <p><?php esc_html_e('No activity yet', 'syncly-site-reports'); ?></p>
             </div>
         <?php else : ?>
             <table class="wsal-table">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Event', 'site-wise'); ?></th>
-                        <th><?php esc_html_e('Object', 'site-wise'); ?></th>
-                        <th><?php esc_html_e('User', 'site-wise'); ?></th>
-                        <th><?php esc_html_e('IP', 'site-wise'); ?></th>
-                        <th><?php esc_html_e('Time', 'site-wise'); ?></th>
+                        <th><?php esc_html_e('Event', 'syncly-site-reports'); ?></th>
+                        <th><?php esc_html_e('Object', 'syncly-site-reports'); ?></th>
+                        <th><?php esc_html_e('User', 'syncly-site-reports'); ?></th>
+                        <th><?php esc_html_e('IP', 'syncly-site-reports'); ?></th>
+                        <th><?php esc_html_e('Time', 'syncly-site-reports'); ?></th>
                     </tr>
                 </thead>
                 <tbody>

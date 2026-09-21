@@ -9,7 +9,7 @@ if (!$log) return;
 $event = EventRegistry::get_instance()->get($log->event_code);
 $label = $event['label'] ?? $log->event_code;
 $severity = $event['severity'] ?? 'info';
-$time = human_time_diff(strtotime((string)$log->created_at), current_time('U')) . ' ' . __('ago', 'site-wise');
+$time = human_time_diff(strtotime((string)$log->created_at), current_time('U')) . ' ' . __('ago', 'syncly-site-reports');
 ?>
 <tr>
     <td>

@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) exit;
 
 use WPSiteActivityLog\Log\LogQuery;
 use WPSiteActivityLog\Core\SettingsManager;
+use WPSiteActivityLog\Core\AssetsManager;
 
 class ReportGenerator
 {
@@ -107,15 +108,17 @@ class ReportGenerator
         }
 
         if (!(bool)SettingsManager::get_instance()->get('enable_report', true)) {
-            wp_die(esc_html__('Reports are disabled on this site', 'site-wise'), 403);
+            wp_die(esc_html__('Reports are disabled on this site', 'syncly-site-reports'), 403);
         }
 
         $token = sanitize_text_field($_GET['token']);
         if (!get_transient('wsal_report_token_' . $token)) {
-            wp_die(esc_html__('Invalid or expired token', 'site-wise'), 403);
+            wp_die(esc_html__('Invalid or expired token', 'syncly-site-reports'), 403);
         }
 
         $period = sanitize_key($_GET['period'] ?? 'week');
+
+        AssetsManager::get_instance()->enqueue_report_assets();
 
         $report = $this->generate(['period' => $period]);
         $analysis = ReportAnalyzer::get_instance()->analyze(['period' => $period]);
@@ -126,7 +129,7 @@ class ReportGenerator
             extract($args);
             include $template;
         } else {
-            wp_die(esc_html__('Report template not found', 'site-wise'));
+            wp_die(esc_html__('Report template not found', 'syncly-site-reports'));
         }
 
         exit;
@@ -140,10 +143,10 @@ class ReportGenerator
     public function period_label(string $period): string
     {
         return match ($period) {
-            'day' => __('Today', 'site-wise'),
-            'week' => __('Last 7 days', 'site-wise'),
-            'month' => __('Last 30 days', 'site-wise'),
-            default => __('Reporting period', 'site-wise'),
+            'day' => __('Today', 'syncly-site-reports'),
+            'week' => __('Last 7 days', 'syncly-site-reports'),
+            'month' => __('Last 30 days', 'syncly-site-reports'),
+            default => __('Reporting period', 'syncly-site-reports'),
         };
     }
 

@@ -41,7 +41,7 @@ class CommentTracker
 
     public function track_created(int $comment_id, \WP_Comment $comment): void
     {
-        $author = $comment->comment_author ?: __('Guest', 'site-wise');
+        $author = $comment->comment_author ?: __('Guest', 'syncly-site-reports');
 
         $this->logger->log('comment.created', $author, [
             'comment_id' => $comment_id,
@@ -57,7 +57,7 @@ class CommentTracker
             return;
         }
 
-        $author = $comment->comment_author ?: __('Guest', 'site-wise');
+        $author = $comment->comment_author ?: __('Guest', 'syncly-site-reports');
 
         if ($new_status === 'spam') {
             $this->logger->log('comment.spammed', $author, [
@@ -74,7 +74,7 @@ class CommentTracker
             return;
         }
 
-        $author = $comment->comment_author ?: __('Guest', 'site-wise');
+        $author = $comment->comment_author ?: __('Guest', 'syncly-site-reports');
 
         $this->logger->log('comment.deleted', $author, [
             'comment_id' => $comment_id,

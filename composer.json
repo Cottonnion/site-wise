@@ -1,8 +1,8 @@
 {
-  "name": "yahya/site-wise",
+  "name": "yahya/syncly-site-reports",
   "type": "wordpress-plugin",
   "description": "Beautiful activity log and site reports for freelancers and agencies",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [
     {
       "name": "Yahya Eddaqqaq",

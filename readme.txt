@@ -1,20 +1,20 @@
-=== Site Activity Log ===
+=== Syncly Site Reports & Event History ===
 Contributors: yahyadeved
 Tags: activity log, audit log, user activity, site report, logging
 Requires at least: 6.0
-Tested up to: 7.1.1
+Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: site-wise
+Text Domain: syncly-site-reports
 Domain Path: /languages
 
 A clean activity log and shareable site reports for freelancers and agencies.
 
 == Description ==
 
-Site Activity Log records notable events on your WordPress site in a fast, searchable history and turns them into shareable reports — built for freelancers and agencies who need a quick, honest view of what's happening on the sites they manage.
+Syncly Site Reports & Event History records notable events on your WordPress site in a fast, searchable history and turns them into shareable reports — built for freelancers and agencies who need a quick, honest view of what's happening on the sites they manage.
 
 = What it does =
 
@@ -28,9 +28,13 @@ Site Activity Log records notable events on your WordPress site in a fast, searc
 = What it tracks =
 
 * Posts and pages — created, updated, deleted, status changed.
-* Users — login, logout, failed logins, registered, deleted.
+* Users — login, logout, failed logins, registered, deleted, role changes and profile updates.
 * Plugins — activated, deactivated, installed, updated, deleted.
-* Settings and themes — option updates and theme switches.
+* Themes and core — theme switches, installs, updates and deletions; WordPress core updates.
+* Media — uploads and deletions.
+* Comments — created, marked spam, deleted.
+* Taxonomies — category and tag creation and deletion.
+* Settings — option updates.
 
 = Privacy =
 
@@ -38,7 +42,7 @@ All data stays in your own database. Records contain the user who performed the 
 
 == Installation ==
 
-1. Upload the `site-wise` folder to `/wp-content/plugins/`, or install the plugin through the WordPress "Plugins > Add New" screen.
+1. Upload the `syncly-site-reports` folder to `/wp-content/plugins/`, or install the plugin through the WordPress "Plugins > Add New" screen.
 2. Activate the plugin through the "Plugins" screen.
 3. Go to the new "Activity Log" menu item to view the dashboard, log and settings.
 
@@ -72,15 +76,22 @@ Report issues on the WordPress.org support forum or open an issue on GitHub (htt
 
 == Screenshots ==
 
-1. Dashboard view with the weekly report, stats and recent activity.
+1. Activity Log dashboard with the weekly report summary, stats and recent activity.
+2. Filterable activity log with search, event filter and pagination.
+3. Shareable weekly client report view.
 
 == Changelog ==
+
+= 1.1.0 =
+* Named the plugin Syncly Site Reports & Event History (new slug syncly-site-reports).
+* Registered activation and deactivation hooks at plugin load so the log table is created on the activation request.
+* Enqueued report styles via the WordPress asset API instead of a hard-coded stylesheet link, and scoped all admin styles so they load only on the plugin's own screens.
+* Moved the "Tested up to" declaration to the readme and updated it to the current WordPress major version.
 
 = 1.0.3 =
 * Made report narrative strings translatable (literal plural strings; pot re-extracted).
 
 = 1.0.2 =
-* Renamed to Site Activity Log and rebranded around the site-wise slug.
 * Corrected author profile URL and added the development repository link.
 
 = 1.0.1 =

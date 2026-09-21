@@ -46,11 +46,11 @@ class AdminController
     public function render_page(string $slug): void
     {
         if ($slug !== 'wsal-dashboard') {
-            wp_die(esc_html__('Invalid page', 'site-wise'));
+            wp_die(esc_html__('Invalid page', 'syncly-site-reports'));
         }
 
         $args = [
-            'page_title' => __('Activity Log', 'site-wise'),
+            'page_title' => __('Activity Log', 'syncly-site-reports'),
         ];
 
         include WSAL_PATH . 'templates/admin/partials/header.php';
@@ -62,7 +62,7 @@ class AdminController
         check_ajax_referer('wsal_spa', '_wpnonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Unauthorized', 'site-wise')], 403);
+            wp_send_json_error(['message' => __('Unauthorized', 'syncly-site-reports')], 403);
         }
 
         $view = sanitize_key(wp_unslash($_POST['view'] ?? ''));
@@ -85,7 +85,7 @@ class AdminController
         check_ajax_referer('wsal_spa', '_wpnonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Unauthorized', 'site-wise')], 403);
+            wp_send_json_error(['message' => __('Unauthorized', 'syncly-site-reports')], 403);
         }
 
         $settings = SettingsManager::get_instance();
@@ -97,7 +97,7 @@ class AdminController
         $settings->set('enable_report', $enable_report);
         $settings->set('report_period', $report_period);
 
-        wp_send_json_success(['message' => __('Settings saved successfully', 'site-wise')]);
+        wp_send_json_success(['message' => __('Settings saved successfully', 'syncly-site-reports')]);
     }
 
     public function handle_export_csv(): void
@@ -105,7 +105,7 @@ class AdminController
         check_ajax_referer('wsal_spa', '_wpnonce');
 
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('Unauthorized', 'site-wise'), 403);
+            wp_die(esc_html__('Unauthorized', 'syncly-site-reports'), 403);
         }
 
         $query_args = [];

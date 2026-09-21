@@ -43,7 +43,6 @@ class AssetsManager
         add_action('init', [$this, 'define_admin_assets'], 5);
         add_action('init', [$this, 'define_frontend_assets'], 5);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_assets']);
     }
 
     public function register_page(string $slug, string $hook): void
@@ -97,7 +96,7 @@ class AssetsManager
                     'ajax_url' => admin_url('admin-ajax.php'),
                     'nonce' => wp_create_nonce('wsal_spa'),
                     'default_view' => 'dashboard',
-                    'copied_msg' => __('Report link copied to clipboard!', 'site-wise'),
+                    'copied_msg' => __('Report link copied to clipboard!', 'syncly-site-reports'),
                 ]],
                 WSAL_VERSION,
                 true
@@ -127,29 +126,46 @@ class AssetsManager
 
     public function enqueue_admin_assets(): void
     {
-        foreach ($this->admin_global_assets as $asset) {
-            $this->enqueue_asset($asset->handle, $asset, 'admin');
-        }
-
         $screen = get_current_screen();
         if (!$screen) {
             return;
         }
 
         $page = $this->resolve_page_slug($screen->id);
-        if ($page !== null && isset($this->admin_assets[$page])) {
-            foreach ($this->admin_assets[$page] as $asset) {
-                $this->enqueue_asset($asset->handle, $asset, 'admin');
-            }
-        }
-    }
-
-    public function enqueue_frontend_assets(): void
-    {
-        if (is_admin()) {
+        if ($page === null || !isset($this->admin_assets[$page])) {
             return;
         }
 
+        $this->register_global_assets();
+
+        foreach ($this->admin_assets[$page] as $asset) {
+            $this->enqueue_asset($asset->handle, $asset, 'admin');
+        }
+    }
+
+    private function register_global_assets(): void
+    {
+        foreach ($this->admin_global_assets as $asset) {
+            $file_url = $asset->base_url ?? (WSAL_URL . $asset->file);
+
+            $min_file = preg_replace('/\.(css|js)$/', '.min.$1', $asset->file) ?? $asset->file;
+            $min_file_path = WSAL_PATH . $min_file;
+            $min_file_url = $asset->base_url ?? (WSAL_URL . $min_file);
+
+            $use_min = (!defined('SCRIPT_DEBUG') || !SCRIPT_DEBUG) && file_exists($min_file_path);
+            $file_to_use = $use_min ? $min_file_url : $file_url;
+
+            wp_register_style($asset->handle, $file_to_use, $asset->deps, $asset->version);
+        }
+    }
+
+    public function enqueue_report_assets(): void
+    {
+        $this->enqueue_public_asset_list();
+    }
+
+    private function enqueue_public_asset_list(): void
+    {
         foreach ($this->public_assets as $asset) {
             $this->enqueue_asset($asset->handle, $asset, 'public');
         }

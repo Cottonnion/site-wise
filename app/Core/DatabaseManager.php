@@ -56,24 +56,25 @@ class DatabaseManager
         $table = $this->get_table_name();
         $charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE IF NOT EXISTS {$table} (
-            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            event_code VARCHAR(100) NOT NULL,
-            object_type VARCHAR(50) NOT NULL,
-            object_name VARCHAR(255) NOT NULL,
-            object_id BIGINT UNSIGNED DEFAULT NULL,
-            user_id BIGINT UNSIGNED DEFAULT NULL,
-            user_name VARCHAR(100) DEFAULT NULL,
-            user_role VARCHAR(100) DEFAULT NULL,
-            ip_address VARCHAR(45) DEFAULT NULL,
-            user_agent TEXT DEFAULT NULL,
-            message TEXT NOT NULL,
-            meta LONGTEXT DEFAULT NULL,
-            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            INDEX idx_event_code (event_code),
-            INDEX idx_object_type (object_type),
-            INDEX idx_user_id (user_id),
-            INDEX idx_created_at (created_at)
+        $sql = "CREATE TABLE {$table} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            event_code varchar(100) NOT NULL,
+            object_type varchar(50) NOT NULL,
+            object_name varchar(255) NOT NULL,
+            object_id bigint(20) unsigned DEFAULT NULL,
+            user_id bigint(20) unsigned DEFAULT NULL,
+            user_name varchar(100) DEFAULT NULL,
+            user_role varchar(100) DEFAULT NULL,
+            ip_address varchar(45) DEFAULT NULL,
+            user_agent text DEFAULT NULL,
+            message text NOT NULL,
+            meta longtext DEFAULT NULL,
+            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            KEY idx_event_code (event_code),
+            KEY idx_object_type (object_type),
+            KEY idx_user_id (user_id),
+            KEY idx_created_at (created_at)
         ) {$charset_collate};";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';

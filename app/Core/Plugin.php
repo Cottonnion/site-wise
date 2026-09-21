@@ -45,8 +45,6 @@ class Plugin
 
     public function init(): void
     {
-        $this->register_hooks();
-
         $loader = Loader::get_instance();
         $db_manager = DatabaseManager::get_instance();
         $settings_manager = SettingsManager::get_instance();
@@ -95,19 +93,21 @@ class Plugin
         $loader->run();
     }
 
-    private function register_hooks(): void
+    public static function activate(): void
     {
-        register_activation_hook(WSAL_BASENAME, [$this, 'activate']);
-        register_deactivation_hook(WSAL_BASENAME, [$this, 'deactivate']);
-        register_uninstall_hook(WSAL_BASENAME, [__CLASS__, 'uninstall']);
-    }
+        if (version_compare(get_bloginfo('version'), '6.0', '<')) {
+            deactivate_plugins(WSAL_BASENAME);
+            wp_die(
+                esc_html__('Syncly Site Reports & Event History requires WordPress 6.0 or higher. Please upgrade WordPress before activating this plugin.', 'syncly-site-reports'),
+                '',
+                ['back_link' => true]
+            );
+        }
 
-    public function activate(): void
-    {
         DatabaseManager::get_instance()->install();
     }
 
-    public function deactivate(): void
+    public static function deactivate(): void
     {
         wp_clear_scheduled_hook('wsal_daily_maintenance');
     }
