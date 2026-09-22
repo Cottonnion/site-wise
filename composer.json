@@ -1,8 +1,8 @@
 {
-  "name": "yahya/syncly-site-reports",
+  "name": "yahya/loghaven-site-logs",
   "type": "wordpress-plugin",
   "description": "Beautiful activity log and site reports for freelancers and agencies",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "authors": [
     {
       "name": "Yahya Eddaqqaq",

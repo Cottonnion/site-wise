@@ -142,67 +142,67 @@ class ReportAnalyzer
 
         $n = $c['post.created'] + $c['post.updated'] + $c['post.status_changed'];
         if ($n > 0) {
-            $narrative[] = sprintf(_n('%s post or page was created or edited.', '%s posts or pages were created or edited.', $n, 'syncly-site-reports'), number_format_i18n($n));
+            $narrative[] = sprintf(_n('%s post or page was created or edited.', '%s posts or pages were created or edited.', $n, 'loghaven-site-logs'), number_format_i18n($n));
         }
         if ($c['post.deleted'] > 0) {
-            $narrative[] = sprintf(_n('%s post or page was deleted.', '%s posts or pages were deleted.', $c['post.deleted'], 'syncly-site-reports'), number_format_i18n($c['post.deleted']));
+            $narrative[] = sprintf(_n('%s post or page was deleted.', '%s posts or pages were deleted.', $c['post.deleted'], 'loghaven-site-logs'), number_format_i18n($c['post.deleted']));
         }
         if ($c['media.uploaded'] > 0) {
-            $narrative[] = sprintf(_n('%s media file was uploaded.', '%s media files were uploaded.', $c['media.uploaded'], 'syncly-site-reports'), number_format_i18n($c['media.uploaded']));
+            $narrative[] = sprintf(_n('%s media file was uploaded.', '%s media files were uploaded.', $c['media.uploaded'], 'loghaven-site-logs'), number_format_i18n($c['media.uploaded']));
         }
         if ($c['media.deleted'] > 0) {
-            $narrative[] = sprintf(_n('%s media file was deleted.', '%s media files were deleted.', $c['media.deleted'], 'syncly-site-reports'), number_format_i18n($c['media.deleted']));
+            $narrative[] = sprintf(_n('%s media file was deleted.', '%s media files were deleted.', $c['media.deleted'], 'loghaven-site-logs'), number_format_i18n($c['media.deleted']));
         }
         if ($c['user.login'] > 0) {
-            $narrative[] = sprintf(_n('%s person signed in to the site.', '%s people signed in to the site.', $c['user.login'], 'syncly-site-reports'), number_format_i18n($c['user.login']));
+            $narrative[] = sprintf(_n('%s person signed in to the site.', '%s people signed in to the site.', $c['user.login'], 'loghaven-site-logs'), number_format_i18n($c['user.login']));
         }
         if ($c['user.registered'] > 0) {
-            $narrative[] = sprintf(_n('%s new user account was created.', '%s new user accounts were created.', $c['user.registered'], 'syncly-site-reports'), number_format_i18n($c['user.registered']));
+            $narrative[] = sprintf(_n('%s new user account was created.', '%s new user accounts were created.', $c['user.registered'], 'loghaven-site-logs'), number_format_i18n($c['user.registered']));
         }
         if ($c['user.role_changed'] > 0) {
-            $narrative[] = sprintf(_n('%s user had their role changed.', '%s users had their roles changed.', $c['user.role_changed'], 'syncly-site-reports'), number_format_i18n($c['user.role_changed']));
+            $narrative[] = sprintf(_n('%s user had their role changed.', '%s users had their roles changed.', $c['user.role_changed'], 'loghaven-site-logs'), number_format_i18n($c['user.role_changed']));
         }
         if ($c['user.deleted'] > 0) {
-            $narrative[] = sprintf(_n('%s user account was deleted.', '%s user accounts were deleted.', $c['user.deleted'], 'syncly-site-reports'), number_format_i18n($c['user.deleted']));
+            $narrative[] = sprintf(_n('%s user account was deleted.', '%s user accounts were deleted.', $c['user.deleted'], 'loghaven-site-logs'), number_format_i18n($c['user.deleted']));
         }
         if ($c['plugin.installed'] > 0) {
-            $narrative[] = sprintf(_n('%s plugin was installed.', '%s plugins were installed.', $c['plugin.installed'], 'syncly-site-reports'), number_format_i18n($c['plugin.installed']));
+            $narrative[] = sprintf(_n('%s plugin was installed.', '%s plugins were installed.', $c['plugin.installed'], 'loghaven-site-logs'), number_format_i18n($c['plugin.installed']));
         }
         if ($c['plugin.updated'] > 0) {
-            $narrative[] = sprintf(_n('%s plugin was updated.', '%s plugins were updated.', $c['plugin.updated'], 'syncly-site-reports'), number_format_i18n($c['plugin.updated']));
+            $narrative[] = sprintf(_n('%s plugin was updated.', '%s plugins were updated.', $c['plugin.updated'], 'loghaven-site-logs'), number_format_i18n($c['plugin.updated']));
         }
         if ($c['plugin.deleted'] > 0) {
-            $narrative[] = sprintf(_n('%s plugin was deleted.', '%s plugins were deleted.', $c['plugin.deleted'], 'syncly-site-reports'), number_format_i18n($c['plugin.deleted']));
+            $narrative[] = sprintf(_n('%s plugin was deleted.', '%s plugins were deleted.', $c['plugin.deleted'], 'loghaven-site-logs'), number_format_i18n($c['plugin.deleted']));
         }
         $n = $c['plugin.activated'] + $c['plugin.deactivated'];
         if ($n > 0) {
-            $narrative[] = sprintf(_n('%s plugin was switched on or off.', '%s plugins were switched on or off.', $n, 'syncly-site-reports'), number_format_i18n($n));
+            $narrative[] = sprintf(_n('%s plugin was switched on or off.', '%s plugins were switched on or off.', $n, 'loghaven-site-logs'), number_format_i18n($n));
         }
         if ($c['theme.switched'] > 0) {
-            $narrative[] = sprintf(_n('%s theme change was made.', '%s theme changes were made.', $c['theme.switched'], 'syncly-site-reports'), number_format_i18n($c['theme.switched']));
+            $narrative[] = sprintf(_n('%s theme change was made.', '%s theme changes were made.', $c['theme.switched'], 'loghaven-site-logs'), number_format_i18n($c['theme.switched']));
         }
         $n = $c['theme.installed'] + $c['theme.updated'] + $c['theme.deleted'];
         if ($n > 0) {
-            $narrative[] = sprintf(_n('%s other theme change was made.', '%s other theme changes were made.', $n, 'syncly-site-reports'), number_format_i18n($n));
+            $narrative[] = sprintf(_n('%s other theme change was made.', '%s other theme changes were made.', $n, 'loghaven-site-logs'), number_format_i18n($n));
         }
         if ($c['comment.created'] > 0) {
-            $narrative[] = sprintf(_n('%s comment was added.', '%s comments were added.', $c['comment.created'], 'syncly-site-reports'), number_format_i18n($c['comment.created']));
+            $narrative[] = sprintf(_n('%s comment was added.', '%s comments were added.', $c['comment.created'], 'loghaven-site-logs'), number_format_i18n($c['comment.created']));
         }
         if ($c['comment.spammed'] > 0) {
-            $narrative[] = sprintf(_n('%s comment was marked as spam.', '%s comments were marked as spam.', $c['comment.spammed'], 'syncly-site-reports'), number_format_i18n($c['comment.spammed']));
+            $narrative[] = sprintf(_n('%s comment was marked as spam.', '%s comments were marked as spam.', $c['comment.spammed'], 'loghaven-site-logs'), number_format_i18n($c['comment.spammed']));
         }
         $n = $c['term.created'] + $c['term.deleted'];
         if ($n > 0) {
-            $narrative[] = sprintf(_n('%s category or tag was changed.', '%s categories or tags were changed.', $n, 'syncly-site-reports'), number_format_i18n($n));
+            $narrative[] = sprintf(_n('%s category or tag was changed.', '%s categories or tags were changed.', $n, 'loghaven-site-logs'), number_format_i18n($n));
         }
 
         if ($c['core.updated'] > 0) {
-            $narrative[] = __('WordPress was updated to a new version.', 'syncly-site-reports');
+            $narrative[] = __('WordPress was updated to a new version.', 'loghaven-site-logs');
         }
 
         if ($c['user.login_failed'] > 0) {
             $narrative[] = sprintf(
-                _n('%s sign-in attempt failed.', '%s sign-in attempts failed.', $c['user.login_failed'], 'syncly-site-reports'),
+                _n('%s sign-in attempt failed.', '%s sign-in attempts failed.', $c['user.login_failed'], 'loghaven-site-logs'),
                 number_format_i18n($c['user.login_failed'])
             );
         }
@@ -219,7 +219,7 @@ class ReportAnalyzer
                 $attention[] = [
                     'severity' => 'critical',
                     'text' => sprintf(
-                        _n('%d failed sign-in attempt came from a single IP address.', '%d failed sign-in attempts came from a single IP address.', $count, 'syncly-site-reports'),
+                        _n('%d failed sign-in attempt came from a single IP address.', '%d failed sign-in attempts came from a single IP address.', $count, 'loghaven-site-logs'),
                         $count
                     ),
                 ];
@@ -227,21 +227,21 @@ class ReportAnalyzer
         }
 
         foreach ($admin_grants as $name) {
-            $attention[] = ['severity' => 'warning', 'text' => sprintf(__('%s was granted the Administrator role.', 'syncly-site-reports'), $name)];
+            $attention[] = ['severity' => 'warning', 'text' => sprintf(__('%s was granted the Administrator role.', 'loghaven-site-logs'), $name)];
         }
 
         foreach ($deleted_plugins as $name) {
-            $attention[] = ['severity' => 'warning', 'text' => sprintf(__('Plugin deleted: %s', 'syncly-site-reports'), $name)];
+            $attention[] = ['severity' => 'warning', 'text' => sprintf(__('Plugin deleted: %s', 'loghaven-site-logs'), $name)];
         }
 
         foreach ($deleted_users as $name) {
-            $attention[] = ['severity' => 'warning', 'text' => sprintf(__('User account deleted: %s', 'syncly-site-reports'), $name)];
+            $attention[] = ['severity' => 'warning', 'text' => sprintf(__('User account deleted: %s', 'loghaven-site-logs'), $name)];
         }
 
         if ($attention === [] && $counts['user.login_failed'] > 0) {
             $attention[] = [
                 'severity' => 'info',
-                'text' => sprintf(__('%d failed sign-in attempt was recorded.', 'syncly-site-reports'), $counts['user.login_failed']),
+                'text' => sprintf(__('%d failed sign-in attempt was recorded.', 'loghaven-site-logs'), $counts['user.login_failed']),
             ];
         }
 

@@ -108,12 +108,12 @@ class ReportGenerator
         }
 
         if (!(bool)SettingsManager::get_instance()->get('enable_report', true)) {
-            wp_die(esc_html__('Reports are disabled on this site', 'syncly-site-reports'), 403);
+            wp_die(esc_html__('Reports are disabled on this site', 'loghaven-site-logs'), 403);
         }
 
         $token = sanitize_text_field($_GET['token']);
         if (!get_transient('wsal_report_token_' . $token)) {
-            wp_die(esc_html__('Invalid or expired token', 'syncly-site-reports'), 403);
+            wp_die(esc_html__('Invalid or expired token', 'loghaven-site-logs'), 403);
         }
 
         $period = sanitize_key($_GET['period'] ?? 'week');
@@ -129,7 +129,7 @@ class ReportGenerator
             extract($args);
             include $template;
         } else {
-            wp_die(esc_html__('Report template not found', 'syncly-site-reports'));
+            wp_die(esc_html__('Report template not found', 'loghaven-site-logs'));
         }
 
         exit;
@@ -143,10 +143,10 @@ class ReportGenerator
     public function period_label(string $period): string
     {
         return match ($period) {
-            'day' => __('Today', 'syncly-site-reports'),
-            'week' => __('Last 7 days', 'syncly-site-reports'),
-            'month' => __('Last 30 days', 'syncly-site-reports'),
-            default => __('Reporting period', 'syncly-site-reports'),
+            'day' => __('Today', 'loghaven-site-logs'),
+            'week' => __('Last 7 days', 'loghaven-site-logs'),
+            'month' => __('Last 30 days', 'loghaven-site-logs'),
+            default => __('Reporting period', 'loghaven-site-logs'),
         };
     }
 

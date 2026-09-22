@@ -98,7 +98,7 @@ class Plugin
         if (version_compare(get_bloginfo('version'), '6.0', '<')) {
             deactivate_plugins(WSAL_BASENAME);
             wp_die(
-                esc_html__('Syncly Site Reports & Event History requires WordPress 6.0 or higher. Please upgrade WordPress before activating this plugin.', 'syncly-site-reports'),
+                esc_html__('Loghaven Site Logs & Reports requires WordPress 6.0 or higher. Please upgrade WordPress before activating this plugin.', 'loghaven-site-logs'),
                 '',
                 ['back_link' => true]
             );

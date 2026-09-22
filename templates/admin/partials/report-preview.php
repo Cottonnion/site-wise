@@ -17,16 +17,16 @@ $drift = $analysis['drift'] ?? [];
     <div class="wsal-card-header">
         <div class="wsal-flex wsal-flex-between wsal-gap-md">
             <h2 class="wsal-card-title">
-                <?php echo esc_html($period_label !== '' ? $period_label : __('Site Report', 'syncly-site-reports')); ?>
+                <?php echo esc_html($period_label !== '' ? $period_label : __('Site Report', 'loghaven-site-logs')); ?>
             </h2>
             <button class="wsal-btn wsal-btn-ghost wsal-btn-sm" data-action="copy-report-link" data-url="<?php echo esc_url($share_url); ?>">
-                <?php esc_html_e('Copy Report Link', 'syncly-site-reports'); ?>
+                <?php esc_html_e('Copy Report Link', 'loghaven-site-logs'); ?>
             </button>
         </div>
     </div>
     <div class="wsal-card-body">
         <?php if (empty($narrative)) : ?>
-            <p class="wsal-report-quiet"><?php esc_html_e('No notable activity during this period.', 'syncly-site-reports'); ?></p>
+            <p class="wsal-report-quiet"><?php esc_html_e('No notable activity during this period.', 'loghaven-site-logs'); ?></p>
         <?php else : ?>
             <ul class="wsal-report-bullets">
                 <?php foreach ($narrative as $sentence) : ?>
@@ -37,7 +37,7 @@ $drift = $analysis['drift'] ?? [];
 
         <?php if (!empty($attention)) : ?>
             <div class="wsal-attention wsal-mt-md">
-                <strong class="wsal-attention-title"><?php esc_html_e('Needs your attention', 'syncly-site-reports'); ?></strong>
+                <strong class="wsal-attention-title"><?php esc_html_e('Needs your attention', 'loghaven-site-logs'); ?></strong>
                 <ul class="wsal-attention-list">
                     <?php foreach ($attention as $item) : ?>
                         <li class="wsal-attention-<?php echo esc_attr($item['severity'] ?? 'info'); ?>">
@@ -50,13 +50,13 @@ $drift = $analysis['drift'] ?? [];
 
         <?php if (!empty($drift)) : ?>
             <div class="wsal-drift wsal-mt-md">
-                <strong class="wsal-attention-title"><?php esc_html_e('Important settings changed', 'syncly-site-reports'); ?></strong>
+                <strong class="wsal-attention-title"><?php esc_html_e('Important settings changed', 'loghaven-site-logs'); ?></strong>
                 <ul class="wsal-report-bullets">
                     <?php foreach ($drift as $row) : ?>
                         <li>
                             <?php echo esc_html(sprintf(
                                 /* translators: 1: option name, 2: old value, 3: new value */
-                                __('%1$s changed from "%2$s" to "%3$s"', 'syncly-site-reports'),
+                                __('%1$s changed from "%2$s" to "%3$s"', 'loghaven-site-logs'),
                                 $row['option'],
                                 $row['old'],
                                 $row['new']

@@ -41,8 +41,8 @@ class MenuManager
         $assets = AssetsManager::get_instance();
 
         $hook = add_menu_page(
-            __('Activity Log', 'syncly-site-reports'),
-            __('Activity Log', 'syncly-site-reports'),
+            __('Activity Log', 'loghaven-site-logs'),
+            __('Activity Log', 'loghaven-site-logs'),
             $capability,
             $slug,
             [$this, 'render_dashboard_page'],

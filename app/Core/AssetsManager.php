@@ -96,7 +96,7 @@ class AssetsManager
                     'ajax_url' => admin_url('admin-ajax.php'),
                     'nonce' => wp_create_nonce('wsal_spa'),
                     'default_view' => 'dashboard',
-                    'copied_msg' => __('Report link copied to clipboard!', 'syncly-site-reports'),
+                    'copied_msg' => __('Report link copied to clipboard!', 'loghaven-site-logs'),
                 ]],
                 WSAL_VERSION,
                 true

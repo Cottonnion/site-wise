@@ -1,4 +1,4 @@
-# Syncly Site Reports & Event History
+# Loghaven Site Logs & Reports
 
 A clean activity log and shareable site reports for freelancers and agencies.
 

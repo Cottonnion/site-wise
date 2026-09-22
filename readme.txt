@@ -1,20 +1,20 @@
-=== Syncly Site Reports & Event History ===
+=== Loghaven Site Logs & Reports ===
 Contributors: yahyadeved
 Tags: activity log, audit log, user activity, site report, logging
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: syncly-site-reports
+Text Domain: loghaven-site-logs
 Domain Path: /languages
 
 A clean activity log and shareable site reports for freelancers and agencies.
 
 == Description ==
 
-Syncly Site Reports & Event History records notable events on your WordPress site in a fast, searchable history and turns them into shareable reports — built for freelancers and agencies who need a quick, honest view of what's happening on the sites they manage.
+Loghaven Site Logs & Reports records notable events on your WordPress site in a fast, searchable history and turns them into shareable reports — built for freelancers and agencies who need a quick, honest view of what's happening on the sites they manage.
 
 = What it does =
 
@@ -42,7 +42,7 @@ All data stays in your own database. Records contain the user who performed the 
 
 == Installation ==
 
-1. Upload the `syncly-site-reports` folder to `/wp-content/plugins/`, or install the plugin through the WordPress "Plugins > Add New" screen.
+1. Upload the `loghaven-site-logs` folder to `/wp-content/plugins/`, or install the plugin through the WordPress "Plugins > Add New" screen.
 2. Activate the plugin through the "Plugins" screen.
 3. Go to the new "Activity Log" menu item to view the dashboard, log and settings.
 
@@ -82,8 +82,10 @@ Report issues on the WordPress.org support forum or open an issue on GitHub (htt
 
 == Changelog ==
 
+= 1.1.1 =
+* Named the plugin Loghaven Site Logs & Reports (slug loghaven-site-logs).
+
 = 1.1.0 =
-* Named the plugin Syncly Site Reports & Event History (new slug syncly-site-reports).
 * Registered activation and deactivation hooks at plugin load so the log table is created on the activation request.
 * Enqueued report styles via the WordPress asset API instead of a hard-coded stylesheet link, and scoped all admin styles so they load only on the plugin's own screens.
 * Moved the "Tested up to" declaration to the readme and updated it to the current WordPress major version.

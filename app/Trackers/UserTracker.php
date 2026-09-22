@@ -117,7 +117,7 @@ class UserTracker
 
         $this->logger->log('user.role_changed', $user->display_name ?: $user->user_login, [
             'user_id' => $user_id,
-            'from_role' => $old_role ?: __('(none)', 'syncly-site-reports'),
+            'from_role' => $old_role ?: __('(none)', 'loghaven-site-logs'),
             'to_role' => $role,
         ], $user_id);
     }

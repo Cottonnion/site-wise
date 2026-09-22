@@ -46,11 +46,11 @@ class AdminController
     public function render_page(string $slug): void
     {
         if ($slug !== 'wsal-dashboard') {
-            wp_die(esc_html__('Invalid page', 'syncly-site-reports'));
+            wp_die(esc_html__('Invalid page', 'loghaven-site-logs'));
         }
 
         $args = [
-            'page_title' => __('Activity Log', 'syncly-site-reports'),
+            'page_title' => __('Activity Log', 'loghaven-site-logs'),
         ];
 
         include WSAL_PATH . 'templates/admin/partials/header.php';
@@ -62,7 +62,7 @@ class AdminController
         check_ajax_referer('wsal_spa', '_wpnonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Unauthorized', 'syncly-site-reports')], 403);
+            wp_send_json_error(['message' => __('Unauthorized', 'loghaven-site-logs')], 403);
         }
 
         $view = sanitize_key(wp_unslash($_POST['view'] ?? ''));
@@ -85,7 +85,7 @@ class AdminController
         check_ajax_referer('wsal_spa', '_wpnonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Unauthorized', 'syncly-site-reports')], 403);
+            wp_send_json_error(['message' => __('Unauthorized', 'loghaven-site-logs')], 403);
         }
 
         $settings = SettingsManager::get_instance();
@@ -97,7 +97,7 @@ class AdminController
         $settings->set('enable_report', $enable_report);
         $settings->set('report_period', $report_period);
 
-        wp_send_json_success(['message' => __('Settings saved successfully', 'syncly-site-reports')]);
+        wp_send_json_success(['message' => __('Settings saved successfully', 'loghaven-site-logs')]);
     }
 
     public function handle_export_csv(): void
@@ -105,7 +105,7 @@ class AdminController
         check_ajax_referer('wsal_spa', '_wpnonce');
 
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('Unauthorized', 'syncly-site-reports'), 403);
+            wp_die(esc_html__('Unauthorized', 'loghaven-site-logs'), 403);
         }
 
         $query_args = [];
