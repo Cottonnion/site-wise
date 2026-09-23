@@ -95,20 +95,20 @@ jobs:
       - name: Install Subversion
         run: sudo apt-get update -q && sudo apt-get install -y subversion
 
-      - name: Checkout WordPress.org SVN
+      - name: Deploy to WordPress.org SVN
+        env:
+          WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
         run: |
           set -euo pipefail
-          svn checkout --depth immediates "${SVN_URL}" /tmp/svn-repo
-          svn update --set-depth infinity /tmp/svn-repo/trunk
-          svn update --set-depth infinity /tmp/svn-repo/assets || true
+          VERSION="${{ steps.release_tag.outputs.version }}"
 
-      - name: Sync plugin files to SVN trunk
-        run: |
-          set -euo pipefail
-          STAGING="${RUNNER_TEMP}/svn-trunk-staging"
-          mkdir -p "${STAGING}"
+          # Checkout trunk and assets separately (avoids shallow working-copy depth issues)
+          rm -rf /tmp/svn-trunk /tmp/svn-assets
+          svn checkout "${SVN_URL}/trunk" /tmp/svn-trunk
+          svn checkout "${SVN_URL}/assets" /tmp/svn-assets
 
-          rsync -a --delete ./ "${STAGING}/" \
+          # Sync plugin files to SVN trunk
+          rsync -a --delete ./ /tmp/svn-trunk/ \
             --exclude '.git/' \
             --exclude '.github/' \
             --exclude '.wordpress-org/' \
@@ -117,60 +117,25 @@ jobs:
             --exclude 'composer.json' \
             --exclude 'composer.lock' \
             --exclude 'readme.md' \
-            --exclude '.DS_Store'
-
-          rsync -a --delete "${STAGING}/" /tmp/svn-repo/trunk/ \
+            --exclude '.DS_Store' \
             --exclude '.svn/'
 
-      - name: Sync assets (.wordpress-org -> SVN assets)
-        run: |
-          set -euo pipefail
-          if [ -d "./.wordpress-org" ]; then
-            rsync -a --delete ./.wordpress-org/ /tmp/svn-repo/assets/
-          fi
-
-      - name: Stage SVN changes (add new / delete removed)
-        run: |
-          set -euo pipefail
-          cd /tmp/svn-repo
-
-          # Set image MIME types in assets
-          if [ -d "/tmp/svn-repo/assets" ]; then
-            find assets/ -type f -name '*.png' -exec svn propset svn:mime-type image/png {} + 2>/dev/null || true
-            find assets/ -type f -name '*.jpg' -exec svn propset svn:mime-type image/jpeg {} + 2>/dev/null || true
-            find assets/ -type f -name '*.svg' -exec svn propset svn:mime-type image/svg+xml {} + 2>/dev/null || true
-          fi
-
+          # Stage changes in trunk
+          cd /tmp/svn-trunk
           svn status | grep '^?' | awk '{print $2}' | xargs -r svn add --force || true
           svn status | grep '^!' | awk '{print $2}' | xargs -r svn delete --force || true
 
-      - name: Commit Trunk and Assets to WordPress.org SVN
-        env:
-          WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
-        run: |
-          set -euo pipefail
-          cd /tmp/svn-repo
-
-          # Only commit if there are pending SVN modifications
+          # Commit trunk
           if svn status | grep -q '^[ACDMR]'; then
             svn commit \
               --username "${WPORG_USERNAME}" \
               --password "${WPORG_SVN_PASSWORD}" \
               --non-interactive \
-              --message "Release ${{ steps.release_tag.outputs.tag }}"
-          else
-            echo "No changes detected in SVN working copy."
+              --message "Release ${VERSION} to trunk"
           fi
 
-      - name: Tag release in WordPress.org SVN
-        env:
-          WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
-        run: |
-          set -euo pipefail
-          VERSION="${{ steps.release_tag.outputs.version }}"
+          # Tag release from trunk
           TAG_URL="${SVN_URL}/tags/${VERSION}"
-
-          # If tag already exists on SVN, delete it first to ensure fresh tag
           if svn ls "${TAG_URL}" --username "${WPORG_USERNAME}" --password "${WPORG_SVN_PASSWORD}" --non-interactive >/dev/null 2>&1; then
             svn delete "${TAG_URL}" \
               --username "${WPORG_USERNAME}" \
@@ -178,9 +143,30 @@ jobs:
               --non-interactive \
               --message "Remove stale tag ${VERSION} before recreating"
           fi
-
           svn copy "${SVN_URL}/trunk" "${TAG_URL}" \
             --username "${WPORG_USERNAME}" \
             --password "${WPORG_SVN_PASSWORD}" \
             --non-interactive \
             --message "Tag version ${VERSION}"
+
+          # Sync and commit assets (.wordpress-org)
+          if [ -d "${GITHUB_WORKSPACE}/.wordpress-org" ]; then
+            rsync -a --delete "${GITHUB_WORKSPACE}/.wordpress-org/" /tmp/svn-assets/ \
+              --exclude '.svn/'
+            cd /tmp/svn-assets
+
+            find . -type f -name '*.png' -exec svn propset svn:mime-type image/png {} + 2>/dev/null || true
+            find . -type f -name '*.jpg' -exec svn propset svn:mime-type image/jpeg {} + 2>/dev/null || true
+            find . -type f -name '*.svg' -exec svn propset svn:mime-type image/svg+xml {} + 2>/dev/null || true
+
+            svn status | grep '^?' | awk '{print $2}' | xargs -r svn add --force || true
+            svn status | grep '^!' | awk '{print $2}' | xargs -r svn delete --force || true
+
+            if svn status | grep -q '^[ACDMR]'; then
+              svn commit \
+                --username "${WPORG_USERNAME}" \
+                --password "${WPORG_SVN_PASSWORD}" \
+                --non-interactive \
+                --message "Update assets for ${VERSION}"
+            fi
+          fi
