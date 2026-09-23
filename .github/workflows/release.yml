@@ -1,24 +1,48 @@
-name: Release
+name: Release & Deploy to WordPress.org
 
 on:
   push:
     tags:
       - 'v*'
-      - '[0-9]*'
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag, e.g. v1.1.1'
+        required: true
+        type: string
 
 permissions:
   contents: write
 
 jobs:
-  release:
-    name: Build & Release
+  build-and-deploy:
+    name: Build, Release & Deploy to WP.org SVN
     runs-on: ubuntu-latest
+    env:
+      PLUGIN_SLUG: loghaven-site-logs
+      WPORG_USERNAME: yahyadeved
+      SVN_URL: https://plugins.svn.wordpress.org/loghaven-site-logs
+      DIST_DIR: ${{ github.workspace }}/dist
+
     steps:
+      - name: Resolve release tag
+        id: release_tag
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+          VERSION="${TAG#v}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "zip_name=${PLUGIN_SLUG}-${VERSION}.zip" >> "$GITHUB_OUTPUT"
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ steps.release_tag.outputs.tag }}
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -27,46 +51,140 @@ jobs:
           coverage: none
           tools: composer:v2
 
+      - name: Validate Composer metadata
+        run: composer validate --no-check-publish
+
       - name: PHP syntax check
         run: |
           php -l site-wise.php
           find app templates -type f -name '*.php' -print0 | xargs -0 -n1 php -l
 
-      - name: Install dependencies
-        run: |
-          composer validate --no-check-publish
-          composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+      - name: Install production dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Resolve version
-        id: version
-        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
-
-      - name: Build plugin zip
+      - name: Build plugin ZIP for GitHub release
         run: |
           set -euo pipefail
-          PKG="${RUNNER_TEMP}/loghaven-site-logs"
-          mkdir -p "${PKG}"
-          tar --exclude='.git' --exclude='.github' --exclude='.gitignore' \
-              --exclude='.wordpress-org' --exclude='dist' --exclude='*.zip' --exclude='.DS_Store' \
-              -cf - . | tar -xf - -C "${PKG}"
-          mkdir -p dist
-          ZIP="${GITHUB_WORKSPACE}/dist/loghaven-site-logs-${{ steps.version.outputs.version }}.zip"
-          ( cd "${RUNNER_TEMP}" && zip -rq "${ZIP}" loghaven-site-logs )
-          shasum -a 256 "${ZIP}" > "${ZIP}.sha256"
+          PKG="${RUNNER_TEMP}/${PLUGIN_SLUG}"
+          mkdir -p "${PKG}" "${DIST_DIR}"
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: loghaven-site-logs-${{ steps.version.outputs.version }}-build
-          path: dist/*
+          tar --exclude='.git' \
+              --exclude='.github' \
+              --exclude='.gitignore' \
+              --exclude='.wordpress-org' \
+              --exclude='dist' \
+              --exclude='*.zip' \
+              --exclude='.DS_Store' \
+              -cf - . | tar -xf - -C "${PKG}"
+
+          ZIP="${DIST_DIR}/${{ steps.release_tag.outputs.zip_name }}"
+          ( cd "${RUNNER_TEMP}" && zip -rq "${ZIP}" "${PLUGIN_SLUG}" )
+          shasum -a 256 "${ZIP}" > "${ZIP}.sha256"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: ${{ github.ref_name }}
-          tag_name: ${{ github.ref_name }}
+          name: ${{ steps.release_tag.outputs.tag }}
+          tag_name: ${{ steps.release_tag.outputs.tag }}
           generate_release_notes: true
           files: |
             dist/*.zip
             dist/*.zip.sha256
           fail_on_unmatched_files: true
+
+      - name: Install Subversion
+        run: sudo apt-get update -q && sudo apt-get install -y subversion
+
+      - name: Checkout WordPress.org SVN
+        run: |
+          set -euo pipefail
+          svn checkout --depth immediates "${SVN_URL}" /tmp/svn-repo
+          svn update --set-depth infinity /tmp/svn-repo/trunk
+          svn update --set-depth infinity /tmp/svn-repo/assets || true
+
+      - name: Sync plugin files to SVN trunk
+        run: |
+          set -euo pipefail
+          STAGING="${RUNNER_TEMP}/svn-trunk-staging"
+          mkdir -p "${STAGING}"
+
+          rsync -a --delete ./ "${STAGING}/" \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude '.wordpress-org/' \
+            --exclude 'dist/' \
+            --exclude 'vendor/' \
+            --exclude '.gitignore' \
+            --exclude 'composer.json' \
+            --exclude 'composer.lock' \
+            --exclude 'readme.md' \
+            --exclude '.DS_Store'
+
+          # Install vendor inside staging
+          composer install --working-dir="${STAGING}" --no-dev --prefer-dist --no-interaction --optimize-autoloader
+
+          rsync -a --delete "${STAGING}/" /tmp/svn-repo/trunk/ \
+            --exclude '.svn/'
+
+      - name: Sync assets (.wordpress-org -> SVN assets)
+        run: |
+          set -euo pipefail
+          if [ -d "./.wordpress-org" ]; then
+            rsync -a --delete ./.wordpress-org/ /tmp/svn-repo/assets/
+          fi
+
+      - name: Stage SVN changes (add new / delete removed)
+        run: |
+          set -euo pipefail
+          cd /tmp/svn-repo
+
+          # Set image MIME types in assets
+          if [ -d "/tmp/svn-repo/assets" ]; then
+            find assets/ -type f -name '*.png' -exec svn propset svn:mime-type image/png {} + 2>/dev/null || true
+            find assets/ -type f -name '*.jpg' -exec svn propset svn:mime-type image/jpeg {} + 2>/dev/null || true
+            find assets/ -type f -name '*.svg' -exec svn propset svn:mime-type image/svg+xml {} + 2>/dev/null || true
+          fi
+
+          svn status | grep '^?' | awk '{print $2}' | xargs -r svn add --force || true
+          svn status | grep '^!' | awk '{print $2}' | xargs -r svn delete --force || true
+
+      - name: Commit Trunk and Assets to WordPress.org SVN
+        env:
+          WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
+        run: |
+          set -euo pipefail
+          cd /tmp/svn-repo
+
+          # Only commit if there are pending SVN modifications
+          if svn status | grep -q '^[ACDMR]'; then
+            svn commit \
+              --username "${WPORG_USERNAME}" \
+              --password "${WPORG_SVN_PASSWORD}" \
+              --non-interactive \
+              --message "Release ${{ steps.release_tag.outputs.tag }}"
+          else
+            echo "No changes detected in SVN working copy."
+          fi
+
+      - name: Tag release in WordPress.org SVN
+        env:
+          WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.release_tag.outputs.version }}"
+          TAG_URL="${SVN_URL}/tags/${VERSION}"
+
+          # If tag already exists on SVN, delete it first to ensure fresh tag
+          if svn ls "${TAG_URL}" --username "${WPORG_USERNAME}" --password "${WPORG_SVN_PASSWORD}" --non-interactive >/dev/null 2>&1; then
+            svn delete "${TAG_URL}" \
+              --username "${WPORG_USERNAME}" \
+              --password "${WPORG_SVN_PASSWORD}" \
+              --non-interactive \
+              --message "Remove stale tag ${VERSION} before recreating"
+          fi
+
+          svn copy "${SVN_URL}/trunk" "${TAG_URL}" \
+            --username "${WPORG_USERNAME}" \
+            --password "${WPORG_SVN_PASSWORD}" \
+            --non-interactive \
+            --message "Tag version ${VERSION}"
