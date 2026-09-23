@@ -113,15 +113,11 @@ jobs:
             --exclude '.github/' \
             --exclude '.wordpress-org/' \
             --exclude 'dist/' \
-            --exclude 'vendor/' \
             --exclude '.gitignore' \
             --exclude 'composer.json' \
             --exclude 'composer.lock' \
             --exclude 'readme.md' \
             --exclude '.DS_Store'
-
-          # Install vendor inside staging
-          composer install --working-dir="${STAGING}" --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
           rsync -a --delete "${STAGING}/" /tmp/svn-repo/trunk/ \
             --exclude '.svn/'
