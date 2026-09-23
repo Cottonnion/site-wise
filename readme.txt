@@ -1,10 +1,10 @@
 === Loghaven Site Logs & Reports ===
 Contributors: yahyadeved
-Tags: activity log, audit log, user activity, client report, woocommerce activity log, elementor audit, site monitor, agency tools
+Tags: activity log, audit log, user activity, client report, woocommerce activity log
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: loghaven-site-logs
@@ -127,6 +127,9 @@ Yes. Use the "Export CSV" button on the Activity Log screen to download filtered
 4. Settings page with retention options, agency white-labeling, email digests, and Slack/Discord webhook alerts.
 
 == Changelog ==
+
+= 1.3.1 =
+* Trimmed plugin tags to the WordPress.org limit (max 5) to restore proper categorization.
 
 = 1.3.0 =
 * Reworked the Settings page into clean, collapsible sections so configuration is less overwhelming.

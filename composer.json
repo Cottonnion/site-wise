@@ -2,7 +2,7 @@
   "name": "yahya/loghaven-site-logs",
   "type": "wordpress-plugin",
   "description": "Lightweight WordPress activity log, audit trail, and white-label client reports for agencies, freelancers, and store owners",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "authors": [
     {
       "name": "Yahya Eddaqqaq",

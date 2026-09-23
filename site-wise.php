@@ -7,7 +7,7 @@
  * Plugin Name: Loghaven Site Logs & Reports
  * Plugin URI: https://github.com/Cottonnion/site-wise
  * Description: A lightweight WordPress activity log, audit trail, and white-label client reports for agencies, freelancers, and store owners.
- * Version: 1.3.0
+ * Version: 1.3.1
  * Author: Yahya Eddaqqaq
  * Author URI: https://profiles.wordpress.org/yahyadeved/
  * Requires at least: 6.0
@@ -37,7 +37,7 @@ if (version_compare(PHP_VERSION, '8.1', '<')) {
     return;
 }
 
-define('WSAL_VERSION',  '1.3.0');
+define('WSAL_VERSION',  '1.3.1');
 define('WSAL_PATH',     plugin_dir_path(__FILE__));
 define('WSAL_URL',      plugin_dir_url(__FILE__));
 define('WSAL_BASENAME', plugin_basename(__FILE__));
