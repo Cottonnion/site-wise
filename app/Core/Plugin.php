@@ -17,6 +17,8 @@ use WPSiteActivityLog\Trackers\ThemeTracker;
 use WPSiteActivityLog\Trackers\MediaTracker;
 use WPSiteActivityLog\Trackers\CommentTracker;
 use WPSiteActivityLog\Trackers\TaxonomyTracker;
+use WPSiteActivityLog\Trackers\WooCommerceTracker;
+use WPSiteActivityLog\Trackers\ElementorTracker;
 use WPSiteActivityLog\Admin\AdminController;
 use WPSiteActivityLog\Admin\ReportAnalyzer;
 use WPSiteActivityLog\Admin\ReportGenerator;
@@ -62,12 +64,16 @@ class Plugin
         $media_tracker = MediaTracker::get_instance();
         $comment_tracker = CommentTracker::get_instance();
         $taxonomy_tracker = TaxonomyTracker::get_instance();
+        $wc_tracker = WooCommerceTracker::get_instance();
+        $elementor_tracker = ElementorTracker::get_instance();
+        $webhook_notifier = WebhookNotifier::get_instance();
+        $email_digest_manager = EmailDigestManager::get_instance();
         $admin_controller = AdminController::get_instance();
         $report_analyzer = ReportAnalyzer::get_instance();
         $report_generator = ReportGenerator::get_instance();
         $notice_manager = NoticeManager::get_instance();
 
-        $event_registry->init();
+        add_action('init', [$event_registry, 'init'], 10);
         $activity_logger->init();
         $menu_manager->register();
         $assets_manager->init();
@@ -81,12 +87,17 @@ class Plugin
         $media_tracker->init();
         $comment_tracker->init();
         $taxonomy_tracker->init();
+        $wc_tracker->init();
+        $elementor_tracker->init();
+        $webhook_notifier->init();
+        $email_digest_manager->init();
         $report_analyzer->init();
         $report_generator->init();
         $notice_manager->init();
 
         $db_manager->ensure_schema();
         $this->schedule_maintenance();
+        $email_digest_manager->schedule();
 
         add_action('wsal_daily_maintenance', [$this, 'run_daily_maintenance']);
 
@@ -98,7 +109,10 @@ class Plugin
         if (version_compare(get_bloginfo('version'), '6.0', '<')) {
             deactivate_plugins(WSAL_BASENAME);
             wp_die(
-                esc_html__('Loghaven Site Logs & Reports requires WordPress 6.0 or higher. Please upgrade WordPress before activating this plugin.', 'loghaven-site-logs'),
+                sprintf(
+                    esc_html__('%1$s requires WordPress 6.0 or higher. Please upgrade WordPress before activating this plugin.', 'loghaven-site-logs'),
+                    WSAL_PLUGIN_NAME
+                ),
                 '',
                 ['back_link' => true]
             );
@@ -110,6 +124,7 @@ class Plugin
     public static function deactivate(): void
     {
         wp_clear_scheduled_hook('wsal_daily_maintenance');
+        wp_clear_scheduled_hook('wsal_scheduled_email_digest');
     }
 
     public function schedule_maintenance(): void
@@ -132,6 +147,7 @@ class Plugin
     public static function uninstall(): void
     {
         wp_clear_scheduled_hook('wsal_daily_maintenance');
+        wp_clear_scheduled_hook('wsal_scheduled_email_digest');
         global $wpdb;
         $table = DatabaseManager::get_instance()->get_table_name();
         $wpdb->query($wpdb->prepare('DROP TABLE IF EXISTS %i', $table));

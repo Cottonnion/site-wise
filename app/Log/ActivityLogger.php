@@ -59,45 +59,82 @@ class ActivityLogger
             'user_role' => !empty($user->roles) ? implode(',', $user->roles) : '',
             'ip_address' => $ip_address,
             'user_agent' => $user_agent,
-            'message' => $this->build_message($event_code, $object_name),
+            'message' => $this->build_message($event_code, $object_name, $meta),
             'meta' => $this->sanitize_meta($meta),
         ];
 
         $this->db->insert($data);
+
+        /**
+         * Fires immediately after an activity event has been logged to the database.
+         *
+         * @param array $data Stored event data.
+         * @param array $meta Raw sanitized metadata array.
+         */
+        do_action('wsal_event_logged', $data, $meta);
     }
 
-    private function build_message(string $event_code, string $object_name): string
+    private function build_message(string $event_code, string $object_name, array $meta = []): string
     {
         $messages = [
-            'post.created' => sprintf(__('New post created: %s', 'loghaven-site-logs'), $object_name),
-            'post.updated' => sprintf(__('Post updated: %s', 'loghaven-site-logs'), $object_name),
-            'post.deleted' => sprintf(__('Post deleted: %s', 'loghaven-site-logs'), $object_name),
-            'post.status_changed' => sprintf(__('Post status changed: %s', 'loghaven-site-logs'), $object_name),
+            'post.created' => sprintf(__('New content created: %s', 'loghaven-site-logs'), $object_name),
+            'post.updated' => sprintf(__('Content updated: %s', 'loghaven-site-logs'), $object_name),
+            'post.deleted' => sprintf(__('Content deleted permanently: %s', 'loghaven-site-logs'), $object_name),
+            'post.trashed' => sprintf(__('Moved to trash: %s', 'loghaven-site-logs'), $object_name),
+            'post.restored' => sprintf(__('Restored from trash: %s', 'loghaven-site-logs'), $object_name),
+            'post.status_changed' => sprintf(__('Status changed: %s', 'loghaven-site-logs'), $object_name),
+
             'user.login' => sprintf(__('User logged in: %s', 'loghaven-site-logs'), $object_name),
             'user.logout' => sprintf(__('User logged out: %s', 'loghaven-site-logs'), $object_name),
             'user.login_failed' => sprintf(__('Login failed for: %s', 'loghaven-site-logs'), $object_name),
             'user.registered' => sprintf(__('New user registered: %s', 'loghaven-site-logs'), $object_name),
             'user.deleted' => sprintf(__('User deleted: %s', 'loghaven-site-logs'), $object_name),
-            'user.role_changed' => sprintf(__('Role changed for user: %s', 'loghaven-site-logs'), $object_name),
+            'user.role_changed' => sprintf(__('Role changed for: %s', 'loghaven-site-logs'), $object_name),
             'user.profile_updated' => sprintf(__('Profile updated: %s', 'loghaven-site-logs'), $object_name),
+
             'plugin.activated' => sprintf(__('Plugin activated: %s', 'loghaven-site-logs'), $object_name),
             'plugin.deactivated' => sprintf(__('Plugin deactivated: %s', 'loghaven-site-logs'), $object_name),
             'plugin.updated' => sprintf(__('Plugin updated: %s', 'loghaven-site-logs'), $object_name),
             'plugin.installed' => sprintf(__('Plugin installed: %s', 'loghaven-site-logs'), $object_name),
             'plugin.deleted' => sprintf(__('Plugin deleted: %s', 'loghaven-site-logs'), $object_name),
+
             'theme.switched' => sprintf(__('Theme switched to: %s', 'loghaven-site-logs'), $object_name),
             'theme.installed' => sprintf(__('Theme installed: %s', 'loghaven-site-logs'), $object_name),
             'theme.updated' => sprintf(__('Theme updated: %s', 'loghaven-site-logs'), $object_name),
             'theme.deleted' => sprintf(__('Theme deleted: %s', 'loghaven-site-logs'), $object_name),
             'core.updated' => sprintf(__('WordPress updated to version %s', 'loghaven-site-logs'), $object_name),
+
             'media.uploaded' => sprintf(__('Uploaded: %s', 'loghaven-site-logs'), $object_name),
             'media.deleted' => sprintf(__('Deleted media: %s', 'loghaven-site-logs'), $object_name),
+
             'comment.created' => sprintf(__('Comment from %s', 'loghaven-site-logs'), $object_name),
             'comment.spammed' => sprintf(__('Comment marked as spam: %s', 'loghaven-site-logs'), $object_name),
             'comment.deleted' => sprintf(__('Comment deleted: %s', 'loghaven-site-logs'), $object_name),
+
             'term.created' => sprintf(__('Taxonomy term created: %s', 'loghaven-site-logs'), $object_name),
             'term.deleted' => sprintf(__('Taxonomy term deleted: %s', 'loghaven-site-logs'), $object_name),
-            'settings.updated' => sprintf(__('Settings updated', 'loghaven-site-logs')),
+            'settings.updated' => sprintf(__('Settings updated: %s', 'loghaven-site-logs'), $object_name),
+
+            // WooCommerce
+            'wc.order_status' => sprintf(
+                __('%1$s status changed: %2$s &rarr; %3$s', 'loghaven-site-logs'),
+                $object_name,
+                $meta['old_status'] ?? 'unknown',
+                $meta['new_status'] ?? 'unknown'
+            ),
+            'wc.product_created' => sprintf(__('WooCommerce product created: %s', 'loghaven-site-logs'), $object_name),
+            'wc.product_updated' => sprintf(__('WooCommerce product updated: %s', 'loghaven-site-logs'), $object_name),
+            'wc.product_deleted' => sprintf(__('WooCommerce product deleted: %s', 'loghaven-site-logs'), $object_name),
+            'wc.stock_changed' => sprintf(__('Stock quantity changed for: %s', 'loghaven-site-logs'), $object_name),
+            'wc.coupon_created' => sprintf(__('Coupon created: %s', 'loghaven-site-logs'), $object_name),
+            'wc.coupon_deleted' => sprintf(__('Coupon deleted: %s', 'loghaven-site-logs'), $object_name),
+
+            // Elementor
+            'elementor.post_edited' => sprintf(__('Edited with Elementor: %s', 'loghaven-site-logs'), $object_name),
+            'elementor.template_created' => sprintf(__('Elementor template created: %s', 'loghaven-site-logs'), $object_name),
+            'elementor.template_updated' => sprintf(__('Elementor template updated: %s', 'loghaven-site-logs'), $object_name),
+            'elementor.template_deleted' => sprintf(__('Elementor template deleted: %s', 'loghaven-site-logs'), $object_name),
+            'elementor.settings_updated' => sprintf(__('Elementor settings updated: %s', 'loghaven-site-logs'), $object_name),
         ];
 
         return $messages[$event_code] ?? sprintf(__('%s action performed', 'loghaven-site-logs'), $object_name);
@@ -122,11 +159,24 @@ class ActivityLogger
         $sanitized = [];
         foreach ($meta as $key => $value) {
             if (is_array($value)) {
-                $sanitized[$key] = $this->sanitize_meta($value);
+                $sanitized[$key] = $this->sanitize_meta_array($value);
             } else {
                 $sanitized[$key] = is_string($value) ? sanitize_text_field($value) : $value;
             }
         }
         return wp_json_encode($sanitized, JSON_UNESCAPED_UNICODE);
+    }
+
+    private function sanitize_meta_array(array $array): array
+    {
+        $clean = [];
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                $clean[$k] = $this->sanitize_meta_array($v);
+            } else {
+                $clean[$k] = is_string($v) ? sanitize_text_field($v) : $v;
+            }
+        }
+        return $clean;
     }
 }

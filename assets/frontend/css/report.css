@@ -19,6 +19,18 @@
   --wsal-radius-md: 6px;
 }
 
+.wsal-agency-logo-wrap {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.wsal-agency-logo {
+  max-height: 60px;
+  max-width: 240px;
+  object-fit: contain;
+}
+
 .wsal-report-period {
   display: inline-block;
   margin-top: 10px;
@@ -45,6 +57,7 @@
   border-radius: var(--wsal-radius-md);
   background-color: var(--wsal-color-surface);
   color: var(--wsal-color-text);
+  line-height: 1.5;
 }
 
 .wsal-attention-warning { border-left-color: var(--wsal-color-warning); background-color: #fffbeb; }
@@ -87,7 +100,7 @@
   justify-content: space-between;
   background-color: var(--wsal-color-bg);
   padding: 20px;
-  border-radius: var(--wsal-radius-lg);
+  border-radius: var(--wsal-radius-md);
   margin-bottom: 40px;
 }
 
@@ -128,14 +141,14 @@
 
 .wsal-breakdown-item {
   display: grid;
-  grid-template-columns: 100px 1fr 60px;
+  grid-template-columns: 140px 1fr 60px;
   align-items: center;
   gap: 15px;
 }
 
 .wsal-breakdown-label {
   font-weight: 500;
-  text-transform: capitalize;
+  font-size: var(--wsal-font-md);
   color: var(--wsal-color-text);
 }
 
@@ -192,6 +205,16 @@
   font-size: var(--wsal-font-sm);
 }
 
+@media print {
+  body {
+    background-color: #fff;
+  }
+  .wsal-report-container {
+    padding: 0;
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 600px) {
   .wsal-report-meta {
     flex-direction: column;
@@ -199,6 +222,6 @@
   }
 
   .wsal-breakdown-item {
-    grid-template-columns: 80px 1fr 50px;
+    grid-template-columns: 100px 1fr 50px;
   }
 }

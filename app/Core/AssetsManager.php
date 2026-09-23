@@ -96,7 +96,22 @@ class AssetsManager
                     'ajax_url' => admin_url('admin-ajax.php'),
                     'nonce' => wp_create_nonce('wsal_spa'),
                     'default_view' => 'dashboard',
-                    'copied_msg' => __('Report link copied to clipboard!', 'loghaven-site-logs'),
+                    'copied_msg' => __('Link copied!', 'loghaven-site-logs'),
+                    'clear_scopes' => [
+                        ['value' => 'all', 'label' => __('All logs', 'loghaven-site-logs')],
+                        ['value' => 'older_7', 'label' => __('Older than 7 days', 'loghaven-site-logs')],
+                        ['value' => 'older_30', 'label' => __('Older than 30 days', 'loghaven-site-logs')],
+                        ['value' => 'older_90', 'label' => __('Older than 90 days', 'loghaven-site-logs')],
+                        ['value' => 'older_180', 'label' => __('Older than 180 days', 'loghaven-site-logs')],
+                    ],
+                    'clear_logs_title' => __('Clear activity logs', 'loghaven-site-logs'),
+                    'clear_logs_confirm' => __('Clear logs', 'loghaven-site-logs'),
+                    'clear_logs_cancel' => __('Cancel', 'loghaven-site-logs'),
+                    'clear_logs_scope' => __('Scope', 'loghaven-site-logs'),
+                    'clear_logs_count' => __('This will remove approximately %1$d log entries. This action cannot be undone.', 'loghaven-site-logs'),
+                    'clear_logs_count_zero' => __('No log entries match this criteria.', 'loghaven-site-logs'),
+                    'clear_logs_loading' => __('Counting…', 'loghaven-site-logs'),
+                    'cleared_msg' => __('%1$d log entries cleared.', 'loghaven-site-logs'),
                 ]],
                 WSAL_VERSION,
                 true
@@ -137,6 +152,7 @@ class AssetsManager
         }
 
         $this->register_global_assets();
+        wp_enqueue_media();
 
         foreach ($this->admin_assets[$page] as $asset) {
             $this->enqueue_asset($asset->handle, $asset, 'admin');

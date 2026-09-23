@@ -163,13 +163,58 @@ class LogQuery
             return 0;
         }
 
+        $cutoff = $this->get_cutoff($days);
+        return (int)$wpdb->query($wpdb->prepare("DELETE FROM {$table} WHERE created_at < %s", $cutoff));
+    }
+
+    public function count_entries(?int $older_than_days = null): int
+    {
+        global $wpdb;
+        $table = $this->db->get_table_name();
+
+        if (!$this->db->table_exists()) {
+            return 0;
+        }
+
+        if ($older_than_days !== null) {
+            $cutoff = $this->get_cutoff($older_than_days);
+            return (int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$table} WHERE created_at < %s", $cutoff));
+        }
+
+        return (int)$wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+    }
+
+    public function delete_all(): int
+    {
+        global $wpdb;
+        $table = $this->db->get_table_name();
+
+        if (!$this->db->table_exists()) {
+            return 0;
+        }
+
+        return (int)$wpdb->query("DELETE FROM {$table}");
+    }
+
+    public function clear(?int $older_than_days = null): int
+    {
+        if ($older_than_days === null) {
+            return $this->delete_all();
+        }
+
+        return $this->delete_old_logs($older_than_days);
+    }
+
+    private function get_cutoff(int $days): string
+    {
+        global $wpdb;
+
         $now_db = (string)$wpdb->get_var('SELECT NOW()');
         if ($now_db === '') {
             $now_db = gmdate('Y-m-d H:i:s');
         }
 
-        $cutoff = gmdate('Y-m-d H:i:s', strtotime($now_db) - ($days * DAY_IN_SECONDS));
-        return (int)$wpdb->query($wpdb->prepare("DELETE FROM {$table} WHERE created_at < %s", $cutoff));
+        return gmdate('Y-m-d H:i:s', strtotime($now_db) - ($days * DAY_IN_SECONDS));
     }
 
     public function export_csv(array $args = []): string

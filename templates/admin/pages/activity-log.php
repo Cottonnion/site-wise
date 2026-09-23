@@ -61,6 +61,9 @@ $total_pages = (int)ceil($total / $per_page);
                 <button type="button" class="wsal-btn wsal-btn-ghost" data-action="export-csv">
                     <?php esc_html_e('Export CSV', 'loghaven-site-logs'); ?>
                 </button>
+                <button type="button" class="wsal-btn wsal-btn-ghost wsal-btn-danger" data-action="clear-logs">
+                    <?php esc_html_e('Clear Logs', 'loghaven-site-logs'); ?>
+                </button>
             </span>
         </form>
 
@@ -94,7 +97,7 @@ $total_pages = (int)ceil($total / $per_page);
                         </button>
                     <?php endif; ?>
 
-                    <span><?php echo sprintf(esc_html__('Page %d of %d', 'loghaven-site-logs'), $paged, $total_pages); ?></span>
+                    <span><?php echo esc_html(sprintf(__('Page %1$d of %2$d', 'loghaven-site-logs'), $paged, $total_pages)); ?></span>
 
                     <?php if ($paged < $total_pages) : ?>
                         <button type="button" class="wsal-btn wsal-btn-ghost wsal-paginate" data-page="<?php echo (int)($paged + 1); ?>">

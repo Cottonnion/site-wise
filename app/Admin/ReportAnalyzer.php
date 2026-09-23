@@ -64,6 +64,7 @@ class ReportAnalyzer
         $drift = [];
         $deleted_plugins = [];
         $deleted_users = [];
+        $wc_refunds = [];
 
         foreach ($logs as $log) {
             $code = $log->event_code;
@@ -81,6 +82,14 @@ class ReportAnalyzer
                 $meta = json_decode((string)$log->meta, true) ?: [];
                 if (($meta['to_role'] ?? '') === 'administrator') {
                     $admin_grants[] = $log->object_name;
+                }
+            }
+
+            if ($code === 'wc.order_status') {
+                $meta = json_decode((string)$log->meta, true) ?: [];
+                $new_status = strtolower((string)($meta['new_status'] ?? ''));
+                if (in_array($new_status, ['refunded', 'cancelled', 'failed'], true)) {
+                    $wc_refunds[] = sprintf('%s (%s)', $log->object_name, ucfirst($new_status));
                 }
             }
 
@@ -114,7 +123,7 @@ class ReportAnalyzer
             'total_events' => count($logs),
             'counts' => $counts,
             'narrative' => $this->build_narrative($counts),
-            'attention' => $this->build_attention($failed_by_ip, $admin_grants, $deleted_plugins, $deleted_users, $counts),
+            'attention' => $this->build_attention($failed_by_ip, $admin_grants, $deleted_plugins, $deleted_users, $wc_refunds, $counts),
             'anomalies' => ['failed_by_ip' => $failed_by_ip],
             'drift' => $drift,
         ];
@@ -123,14 +132,16 @@ class ReportAnalyzer
     private function empty_counts(): array
     {
         $codes = [
-            'post.created', 'post.updated', 'post.deleted', 'post.status_changed',
-            'user.login', 'user.login_failed', 'user.registered', 'user.deleted', 'user.role_changed',
+            'post.created', 'post.updated', 'post.deleted', 'post.trashed', 'post.restored', 'post.status_changed',
+            'user.login', 'user.login_failed', 'user.registered', 'user.deleted', 'user.role_changed', 'user.profile_updated',
             'plugin.installed', 'plugin.updated', 'plugin.activated', 'plugin.deactivated', 'plugin.deleted',
             'theme.switched', 'theme.installed', 'theme.updated', 'theme.deleted', 'core.updated',
             'media.uploaded', 'media.deleted',
             'comment.created', 'comment.spammed', 'comment.deleted',
             'term.created', 'term.deleted',
             'settings.updated',
+            'wc.order_status', 'wc.product_created', 'wc.product_updated', 'wc.product_deleted', 'wc.stock_changed', 'wc.coupon_created', 'wc.coupon_deleted',
+            'elementor.post_edited', 'elementor.template_created', 'elementor.template_updated', 'elementor.template_deleted', 'elementor.settings_updated',
         ];
         return array_fill_keys($codes, 0);
     }
@@ -140,19 +151,45 @@ class ReportAnalyzer
         $narrative = [];
         $c = $counts;
 
+        // Content
         $n = $c['post.created'] + $c['post.updated'] + $c['post.status_changed'];
         if ($n > 0) {
             $narrative[] = sprintf(_n('%s post or page was created or edited.', '%s posts or pages were created or edited.', $n, 'loghaven-site-logs'), number_format_i18n($n));
         }
-        if ($c['post.deleted'] > 0) {
-            $narrative[] = sprintf(_n('%s post or page was deleted.', '%s posts or pages were deleted.', $c['post.deleted'], 'loghaven-site-logs'), number_format_i18n($c['post.deleted']));
+        if ($c['post.trashed'] > 0) {
+            $narrative[] = sprintf(_n('%s post or item was moved to trash.', '%s posts or items were moved to trash.', $c['post.trashed'], 'loghaven-site-logs'), number_format_i18n($c['post.trashed']));
         }
+        if ($c['post.deleted'] > 0) {
+            $narrative[] = sprintf(_n('%s post or page was permanently deleted.', '%s posts or pages were permanently deleted.', $c['post.deleted'], 'loghaven-site-logs'), number_format_i18n($c['post.deleted']));
+        }
+
+        // Elementor
+        $elem_edits = $c['elementor.post_edited'] + $c['elementor.template_created'] + $c['elementor.template_updated'];
+        if ($elem_edits > 0) {
+            $narrative[] = sprintf(_n('%s layout or template was edited in Elementor.', '%s layouts or templates were edited in Elementor.', $elem_edits, 'loghaven-site-logs'), number_format_i18n($elem_edits));
+        }
+
+        // WooCommerce
+        if ($c['wc.order_status'] > 0) {
+            $narrative[] = sprintf(_n('%s store order had status updates.', '%s store orders had status updates.', $c['wc.order_status'], 'loghaven-site-logs'), number_format_i18n($c['wc.order_status']));
+        }
+        $wc_prods = $c['wc.product_created'] + $c['wc.product_updated'];
+        if ($wc_prods > 0) {
+            $narrative[] = sprintf(_n('%s store product was added or modified.', '%s store products were added or modified.', $wc_prods, 'loghaven-site-logs'), number_format_i18n($wc_prods));
+        }
+        if ($c['wc.stock_changed'] > 0) {
+            $narrative[] = sprintf(_n('%s product inventory adjustment was recorded.', '%s product inventory adjustments were recorded.', $c['wc.stock_changed'], 'loghaven-site-logs'), number_format_i18n($c['wc.stock_changed']));
+        }
+
+        // Media
         if ($c['media.uploaded'] > 0) {
             $narrative[] = sprintf(_n('%s media file was uploaded.', '%s media files were uploaded.', $c['media.uploaded'], 'loghaven-site-logs'), number_format_i18n($c['media.uploaded']));
         }
         if ($c['media.deleted'] > 0) {
             $narrative[] = sprintf(_n('%s media file was deleted.', '%s media files were deleted.', $c['media.deleted'], 'loghaven-site-logs'), number_format_i18n($c['media.deleted']));
         }
+
+        // Users
         if ($c['user.login'] > 0) {
             $narrative[] = sprintf(_n('%s person signed in to the site.', '%s people signed in to the site.', $c['user.login'], 'loghaven-site-logs'), number_format_i18n($c['user.login']));
         }
@@ -165,11 +202,13 @@ class ReportAnalyzer
         if ($c['user.deleted'] > 0) {
             $narrative[] = sprintf(_n('%s user account was deleted.', '%s user accounts were deleted.', $c['user.deleted'], 'loghaven-site-logs'), number_format_i18n($c['user.deleted']));
         }
-        if ($c['plugin.installed'] > 0) {
-            $narrative[] = sprintf(_n('%s plugin was installed.', '%s plugins were installed.', $c['plugin.installed'], 'loghaven-site-logs'), number_format_i18n($c['plugin.installed']));
-        }
+
+        // Plugins & Themes
         if ($c['plugin.updated'] > 0) {
             $narrative[] = sprintf(_n('%s plugin was updated.', '%s plugins were updated.', $c['plugin.updated'], 'loghaven-site-logs'), number_format_i18n($c['plugin.updated']));
+        }
+        if ($c['plugin.installed'] > 0) {
+            $narrative[] = sprintf(_n('%s plugin was installed.', '%s plugins were installed.', $c['plugin.installed'], 'loghaven-site-logs'), number_format_i18n($c['plugin.installed']));
         }
         if ($c['plugin.deleted'] > 0) {
             $narrative[] = sprintf(_n('%s plugin was deleted.', '%s plugins were deleted.', $c['plugin.deleted'], 'loghaven-site-logs'), number_format_i18n($c['plugin.deleted']));
@@ -185,6 +224,8 @@ class ReportAnalyzer
         if ($n > 0) {
             $narrative[] = sprintf(_n('%s other theme change was made.', '%s other theme changes were made.', $n, 'loghaven-site-logs'), number_format_i18n($n));
         }
+
+        // Comments & Terms
         if ($c['comment.created'] > 0) {
             $narrative[] = sprintf(_n('%s comment was added.', '%s comments were added.', $c['comment.created'], 'loghaven-site-logs'), number_format_i18n($c['comment.created']));
         }
@@ -197,7 +238,7 @@ class ReportAnalyzer
         }
 
         if ($c['core.updated'] > 0) {
-            $narrative[] = __('WordPress was updated to a new version.', 'loghaven-site-logs');
+            $narrative[] = __('WordPress core was updated to a new version.', 'loghaven-site-logs');
         }
 
         if ($c['user.login_failed'] > 0) {
@@ -210,7 +251,7 @@ class ReportAnalyzer
         return $narrative;
     }
 
-    private function build_attention(array $failed_by_ip, array $admin_grants, array $deleted_plugins, array $deleted_users, array $counts): array
+    private function build_attention(array $failed_by_ip, array $admin_grants, array $deleted_plugins, array $deleted_users, array $wc_refunds, array $counts): array
     {
         $attention = [];
 
@@ -236,6 +277,10 @@ class ReportAnalyzer
 
         foreach ($deleted_users as $name) {
             $attention[] = ['severity' => 'warning', 'text' => sprintf(__('User account deleted: %s', 'loghaven-site-logs'), $name)];
+        }
+
+        foreach ($wc_refunds as $order_ref) {
+            $attention[] = ['severity' => 'info', 'text' => sprintf(__('Order alert: %s', 'loghaven-site-logs'), $order_ref)];
         }
 
         if ($attention === [] && $counts['user.login_failed'] > 0) {

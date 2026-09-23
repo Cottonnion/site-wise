@@ -30,6 +30,36 @@
   gap: var(--wsal-space-sm);
 }
 
+.wsal-diff-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  background-color: #f0f0f1;
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: monospace;
+  color: #1d2327;
+  font-weight: 500;
+}
+
+.wsal-user-role {
+  display: block;
+  font-size: 11px;
+  color: var(--wsal-color-text-muted);
+}
+
+.wsal-user-link {
+  color: var(--wsal-color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.wsal-user-link:hover {
+  text-decoration: underline;
+  color: var(--wsal-color-primary-hover);
+}
+
 /* Pagination */
 .wsal-pagination {
   display: flex;

@@ -6,8 +6,8 @@
  *
  * Plugin Name: Loghaven Site Logs & Reports
  * Plugin URI: https://github.com/Cottonnion/site-wise
- * Description: A clean activity log and shareable site reports for freelancers and agencies.
- * Version: 1.1.1
+ * Description: A lightweight WordPress activity log, audit trail, and white-label client reports for agencies, freelancers, and store owners.
+ * Version: 1.3.0
  * Author: Yahya Eddaqqaq
  * Author URI: https://profiles.wordpress.org/yahyadeved/
  * Requires at least: 6.0
@@ -22,16 +22,22 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+define('WSAL_PLUGIN_NAME', 'Loghaven Site Logs & Reports');
+
 if (version_compare(PHP_VERSION, '8.1', '<')) {
     add_action('admin_notices', function () {
-        echo '<div class="notice notice-error"><p>' .
-            esc_html__('Loghaven Site Logs & Reports requires PHP 8.1 or higher. Please upgrade PHP before activating this plugin.', 'loghaven-site-logs') .
-            '</p></div>';
+        printf(
+            '<div class="notice notice-error"><p>%s</p></div>',
+            sprintf(
+                esc_html__('%1$s requires PHP 8.1 or higher. Please upgrade PHP before activating this plugin.', 'loghaven-site-logs'),
+                esc_html(WSAL_PLUGIN_NAME)
+            )
+        );
     });
     return;
 }
 
-define('WSAL_VERSION',  '1.1.1');
+define('WSAL_VERSION',  '1.3.0');
 define('WSAL_PATH',     plugin_dir_path(__FILE__));
 define('WSAL_URL',      plugin_dir_url(__FILE__));
 define('WSAL_BASENAME', plugin_basename(__FILE__));
